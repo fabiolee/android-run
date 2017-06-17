@@ -1,11 +1,7 @@
 package com.blogspot.carirunners.run.api;
 
-
-import android.support.annotation.NonNull;
-
 import com.blogspot.carirunners.run.vo.Post;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,14 +35,5 @@ public class PostSearchResponse {
 
     public void setItems(List<Post> items) {
         this.items = items;
-    }
-
-    @NonNull
-    public List<String> getPostIds() {
-        List<String> postIds = new ArrayList<>();
-        for (Post post : items) {
-            postIds.add(post.id);
-        }
-        return postIds;
     }
 }

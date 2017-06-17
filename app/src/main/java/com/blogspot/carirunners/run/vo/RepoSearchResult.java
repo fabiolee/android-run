@@ -1,6 +1,6 @@
 package com.blogspot.carirunners.run.vo;
 
-import com.blogspot.carirunners.run.db.GithubTypeConverters;
+import com.blogspot.carirunners.run.db.BloggerTypeConverters;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.TypeConverters;
@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import java.util.List;
 
 @Entity(primaryKeys = {"query"})
-@TypeConverters(GithubTypeConverters.class)
+@TypeConverters(BloggerTypeConverters.class)
 public class RepoSearchResult {
     public final String query;
     public final List<Integer> repoIds;

@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run.api;
 
 import com.blogspot.carirunners.run.util.LiveDataCallAdapterFactory;
+import com.blogspot.carirunners.run.util.LiveDataTestUtil;
 import com.blogspot.carirunners.run.vo.Contributor;
 import com.blogspot.carirunners.run.vo.Repo;
 import com.blogspot.carirunners.run.vo.User;
@@ -18,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +30,6 @@ import okio.Okio;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.blogspot.carirunners.run.util.LiveDataTestUtil.getValue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -63,7 +62,7 @@ public class GithubServiceTest {
     @Test
     public void getUser() throws IOException, InterruptedException {
         enqueueResponse("user-yigit.json");
-        User yigit = getValue(service.getUser("yigit")).body;
+        User yigit = LiveDataTestUtil.getValue(service.getUser("yigit")).body;
 
         RecordedRequest request = mockWebServer.takeRequest();
         assertThat(request.getPath(), is("/users/yigit"));
@@ -77,7 +76,7 @@ public class GithubServiceTest {
     @Test
     public void getRepos() throws IOException, InterruptedException {
         enqueueResponse("repos-yigit.json");
-        List<Repo> repos = getValue(service.getRepos("yigit")).body;
+        List<Repo> repos = LiveDataTestUtil.getValue(service.getRepos("yigit")).body;
 
         RecordedRequest request = mockWebServer.takeRequest();
         assertThat(request.getPath(), is("/users/yigit/repos"));
@@ -99,7 +98,7 @@ public class GithubServiceTest {
     @Test
     public void getContributors() throws IOException, InterruptedException {
         enqueueResponse("contributors.json");
-        List<Contributor> contributors = getValue(
+        List<Contributor> contributors = LiveDataTestUtil.getValue(
                 service.getContributors("foo", "bar")).body;
         assertThat(contributors.size(), is(3));
         Contributor yigit = contributors.get(0);
@@ -108,24 +107,6 @@ public class GithubServiceTest {
         assertThat(yigit.getContributions(), is(291));
         assertThat(contributors.get(1).getLogin(), is("guavabot"));
         assertThat(contributors.get(2).getLogin(), is("coltin"));
-    }
-
-    @Test
-    public void search() throws IOException, InterruptedException {
-        String header = "<https://api.github.com/search/repositories?q=foo&page=2>; rel=\"next\","
-                + " <https://api.github.com/search/repositories?q=foo&page=34>; rel=\"last\"";
-        Map<String, String> headers = new HashMap<>();
-        headers.put("link", header);
-        enqueueResponse("search.json", headers);
-        ApiResponse<RepoSearchResponse> response = getValue(
-                service.searchRepos("foo"));
-
-        assertThat(response, notNullValue());
-        assertThat(response.body.getTotal(), is(41));
-        assertThat(response.body.getItems().size(), is(30));
-        assertThat(response.links.get("next"),
-                is("https://api.github.com/search/repositories?q=foo&page=2"));
-        assertThat(response.getNextPage(), is(2));
     }
 
     private void enqueueResponse(String fileName) throws IOException {

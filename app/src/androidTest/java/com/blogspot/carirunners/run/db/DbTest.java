@@ -7,7 +7,7 @@ import org.junit.Before;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 
-abstract public class DbTest {
+public abstract class DbTest {
     protected AppDatabase db;
 
     @Before

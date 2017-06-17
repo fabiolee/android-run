@@ -1,5 +1,6 @@
 package com.blogspot.carirunners.run.db;
 
+import com.blogspot.carirunners.run.util.LiveDataTestUtil;
 import com.blogspot.carirunners.run.util.TestUtil;
 import com.blogspot.carirunners.run.vo.Contributor;
 import com.blogspot.carirunners.run.vo.Repo;
@@ -15,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.blogspot.carirunners.run.util.LiveDataTestUtil.getValue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +26,7 @@ public class RepoDaoTest extends DbTest {
     public void insertAndRead() throws InterruptedException {
         Repo repo = TestUtil.createRepo("foo", "bar", "desc");
         db.repoDao().insert(repo);
-        Repo loaded = getValue(db.repoDao().load("foo", "bar"));
+        Repo loaded = LiveDataTestUtil.getValue(db.repoDao().load("foo", "bar"));
         assertThat(loaded, notNullValue());
         assertThat(loaded.name, is("bar"));
         assertThat(loaded.description, is("desc"));
@@ -41,7 +41,8 @@ public class RepoDaoTest extends DbTest {
         try {
             db.repoDao().insertContributors(Collections.singletonList(contributor));
             throw new AssertionError("must fail because repo does not exist");
-        } catch (SQLiteException ex) {}
+        } catch (SQLiteException ex) {
+        }
     }
 
     @Test
@@ -57,7 +58,8 @@ public class RepoDaoTest extends DbTest {
         } finally {
             db.endTransaction();
         }
-        List<Contributor> list = getValue(db.repoDao().loadContributors("foo", "bar"));
+        List<Contributor> list = LiveDataTestUtil.getValue(db.repoDao()
+                .loadContributors("foo", "bar"));
         assertThat(list.size(), is(2));
         Contributor first = list.get(0);
 
@@ -89,11 +91,11 @@ public class RepoDaoTest extends DbTest {
         Contributor contributor = TestUtil.createContributor(repo, "aa", 3);
         db.repoDao().insertContributors(Collections.singletonList(contributor));
         LiveData<List<Contributor>> data = db.repoDao().loadContributors("foo", "bar");
-        assertThat(getValue(data).size(), is(1));
+        assertThat(LiveDataTestUtil.getValue(data).size(), is(1));
 
         Repo update = TestUtil.createRepo("foo", "bar", "desc");
         db.repoDao().insert(update);
         data = db.repoDao().loadContributors("foo", "bar");
-        assertThat(getValue(data).size(), is(1));
+        assertThat(LiveDataTestUtil.getValue(data).size(), is(1));
     }
 }

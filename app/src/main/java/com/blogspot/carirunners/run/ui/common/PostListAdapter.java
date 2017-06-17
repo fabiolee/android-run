@@ -48,14 +48,13 @@ public class PostListAdapter extends DataBoundListAdapter<Post, PostItemBinding>
 
     @Override
     protected boolean areItemsTheSame(Post oldItem, Post newItem) {
-        return Objects.equals(oldItem.author, newItem.author) &&
-                Objects.equals(oldItem.title, newItem.title);
+        return Objects.equals(oldItem.id, newItem.id);
     }
 
     @Override
     protected boolean areContentsTheSame(Post oldItem, Post newItem) {
-        return Objects.equals(oldItem.content, newItem.content) &&
-                oldItem.replies == newItem.replies;
+        return Objects.equals(oldItem.title, newItem.title) &&
+                Objects.equals(oldItem.content, newItem.content);
     }
 
     public interface Callback {
