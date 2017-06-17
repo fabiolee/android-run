@@ -1,6 +1,6 @@
 package com.blogspot.carirunners.run.di;
 
-import com.blogspot.carirunners.run.GithubApp;
+import com.blogspot.carirunners.run.AppApplication;
 
 import android.app.Activity;
 import android.app.Application;
@@ -18,10 +18,10 @@ import dagger.android.support.HasSupportFragmentInjector;
  */
 public class AppInjector {
     private AppInjector() {}
-    public static void init(GithubApp githubApp) {
-        DaggerAppComponent.builder().application(githubApp)
-                .build().inject(githubApp);
-        githubApp
+    public static void init(AppApplication application) {
+        DaggerAppComponent.builder().application(application)
+                .build().inject(application);
+        application
                 .registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
                     @Override
                     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

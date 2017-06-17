@@ -9,7 +9,7 @@ android {
         targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.blogspot.carirunners.run.util.GithubTestRunner"
+        testInstrumentationRunner "com.blogspot.carirunners.run.util.AppTestRunner"
     }
     buildTypes {
         debug {
@@ -41,24 +41,23 @@ jacoco {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$support_version"
-    compile "com.android.support:recyclerview-v7:$support_version"
-    compile "com.android.support:cardview-v7:$support_version"
-    compile "com.android.support:design:$support_version"
     compile "android.arch.persistence.room:runtime:$arch_version"
     compile "android.arch.lifecycle:runtime:$arch_version"
     compile "android.arch.lifecycle:extensions:$arch_version"
-    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
-    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.android.support:appcompat-v7:$androidSupportVersion"
+    compile "com.android.support:recyclerview-v7:$androidSupportVersion"
+    compile "com.android.support:cardview-v7:$androidSupportVersion"
+    compile "com.android.support:design:$androidSupportVersion"
+    compile "com.facebook.stetho:stetho:$facebookStethoVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$squareOkHttpVersion"
+    compile "com.squareup.retrofit2:retrofit:$squareRetrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$squareRetrofitVersion"
     compile "com.github.bumptech.glide:glide:$glide_version"
-
     compile "com.google.dagger:dagger:$dagger_version"
     compile "com.google.dagger:dagger-android:$dagger_version"
     compile "com.google.dagger:dagger-android-support:$dagger_version"
     compile "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-
     compile "com.jakewharton.timber:timber:$timber_version"
-
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
     annotationProcessor "android.arch.persistence.room:compiler:$arch_version"
@@ -72,11 +71,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-core-utils'
     })
 
-    androidTestCompile "com.android.support:appcompat-v7:$support_version"
-    androidTestCompile "com.android.support:recyclerview-v7:$support_version"
-    androidTestCompile "com.android.support:support-v4:$support_version"
-    androidTestCompile "com.android.support:design:$support_version"
-
+    androidTestCompile "com.android.support:appcompat-v7:$androidSupportVersion"
+    androidTestCompile "com.android.support:recyclerview-v7:$androidSupportVersion"
+    androidTestCompile "com.android.support:support-v4:$androidSupportVersion"
+    androidTestCompile "com.android.support:design:$androidSupportVersion"
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
@@ -85,7 +83,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-
     androidTestCompile("android.arch.core:core-testing:$arch_version", {
     })
     androidTestCompile "org.mockito:mockito-android:$mockito_version"

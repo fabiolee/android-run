@@ -2,7 +2,7 @@ package com.blogspot.carirunners.run.repository;
 
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.api.RepoSearchResponse;
-import com.blogspot.carirunners.run.db.GithubDb;
+import com.blogspot.carirunners.run.db.AppDatabase;
 import com.blogspot.carirunners.run.db.RepoDao;
 import com.blogspot.carirunners.run.util.TestUtil;
 import com.blogspot.carirunners.run.vo.Repo;
@@ -42,7 +42,7 @@ public class FetchNextSearchPageTaskTest {
 
     private GithubService service;
 
-    private GithubDb db;
+    private AppDatabase db;
 
     private RepoDao repoDao;
 
@@ -55,7 +55,7 @@ public class FetchNextSearchPageTaskTest {
     @Before
     public void init() {
         service = mock(GithubService.class);
-        db = mock(GithubDb.class);
+        db = mock(AppDatabase.class);
         repoDao = mock(RepoDao.class);
         when(db.repoDao()).thenReturn(repoDao);
         task = new FetchNextSearchPageTask("foo", service, db);

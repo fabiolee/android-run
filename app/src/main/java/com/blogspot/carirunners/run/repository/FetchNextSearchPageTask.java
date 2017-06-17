@@ -3,7 +3,7 @@ package com.blogspot.carirunners.run.repository;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.api.RepoSearchResponse;
-import com.blogspot.carirunners.run.db.GithubDb;
+import com.blogspot.carirunners.run.db.AppDatabase;
 import com.blogspot.carirunners.run.vo.RepoSearchResult;
 import com.blogspot.carirunners.run.vo.Resource;
 
@@ -23,9 +23,9 @@ public class FetchNextSearchPageTask implements Runnable {
     private final MutableLiveData<Resource<Boolean>> liveData = new MutableLiveData<>();
     private final String query;
     private final GithubService githubService;
-    private final GithubDb db;
+    private final AppDatabase db;
 
-    FetchNextSearchPageTask(String query, GithubService githubService, GithubDb db) {
+    FetchNextSearchPageTask(String query, GithubService githubService, AppDatabase db) {
         this.query = query;
         this.githubService = githubService;
         this.db = db;

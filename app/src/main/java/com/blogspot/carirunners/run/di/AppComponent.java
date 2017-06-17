@@ -1,6 +1,6 @@
 package com.blogspot.carirunners.run.di;
 
-import com.blogspot.carirunners.run.GithubApp;
+import com.blogspot.carirunners.run.AppApplication;
 
 import android.app.Application;
 
@@ -22,5 +22,5 @@ public interface AppComponent {
         @BindsInstance Builder application(Application application);
         AppComponent build();
     }
-    void inject(GithubApp githubApp);
+    void inject(AppApplication application);
 }

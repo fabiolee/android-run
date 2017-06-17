@@ -1,26 +1,11 @@
-Github Browser Sample with Android Architecture Components
+Cari Runners Blogger with Android Architecture Components
 
-This is a sample app that uses Android Architecture Components with Dagger 2.
-
-**NOTE** It is a relatively more complex and complete example so if you are not familiar
-with [Architecture Components][arch], you are highly recommended to check other examples
-in this repository first.
+This is a mobile app that uses Android Architecture Components with Dagger 2.
 
 ## Functionality
 The app is composed of 3 main screens.
 ### SearchFragment
-Allows you to search repositories on Github.
-Each search result is kept in the database in `RepoSearchResult` table where
-the list of repository IDs are denormalized into a single column.
-The actual `Repo` instances live in the `Repo` table.
-
-Each time a new page is fetched, the same `RepoSearchResult` record in the
-Database is updated with the new list of repository ids.
-
-**NOTE** The UI currently loads all `Repo` items at once, which would not
-perform well on lower end devices. Instead of manually writing lazy
-adapters, we've decided to wait until the built in support in Room is released.
-
+Allows you to search posts on Blogger.
 ### RepoFragment
 This fragment displays the details of a repository and its contributors.
 ### UserFragment
@@ -61,7 +46,9 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 * [Android Data Binding][data-binding]
 * [Dagger 2][dagger2] for dependency injection
 * [Retrofit][retrofit] for REST api communication
+* [Logging Interceptor][logging-interceptor] for logging REST api
 * [Glide][glide] for image loading
+* [Stetho][stetho] for debug bridge
 * [Timber][timber] for logging
 * [espresso][espresso] for UI tests
 * [mockito][mockito] for mocking in tests
@@ -74,6 +61,8 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 [espresso]: https://google.github.io/android-testing-support-library/docs/espresso/
 [dagger2]: https://google.github.io/dagger
 [retrofit]: http://square.github.io/retrofit
+[logging-interceptor]: https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
 [glide]: https://github.com/bumptech/glide
+[stetho]: https://github.com/facebook/stetho
 [timber]: https://github.com/JakeWharton/timber
 [mockito]: http://site.mockito.org

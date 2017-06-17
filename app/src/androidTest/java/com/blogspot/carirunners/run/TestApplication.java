@@ -2,12 +2,14 @@ package com.blogspot.carirunners.run;
 
 import android.app.Application;
 
+import com.blogspot.carirunners.run.util.AppTestRunner;
+
 /**
  * We use a separate App for tests to prevent initializing dependency injection.
  * <p>
- * See {@link com.blogspot.carirunners.run.util.GithubTestRunner}.
+ * See {@link AppTestRunner}.
  */
-public class TestApp extends Application {
+public class TestApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

@@ -4,7 +4,7 @@ import com.blogspot.carirunners.run.AppExecutors;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.api.RepoSearchResponse;
-import com.blogspot.carirunners.run.db.GithubDb;
+import com.blogspot.carirunners.run.db.AppDatabase;
 import com.blogspot.carirunners.run.db.RepoDao;
 import com.blogspot.carirunners.run.util.AbsentLiveData;
 import com.blogspot.carirunners.run.util.RateLimiter;
@@ -36,7 +36,7 @@ import timber.log.Timber;
 @Singleton
 public class RepoRepository {
 
-    private final GithubDb db;
+    private final AppDatabase db;
 
     private final RepoDao repoDao;
 
@@ -47,8 +47,8 @@ public class RepoRepository {
     private RateLimiter<String> repoListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    public RepoRepository(AppExecutors appExecutors, GithubDb db, RepoDao repoDao,
-            GithubService githubService) {
+    public RepoRepository(AppExecutors appExecutors, AppDatabase db, RepoDao repoDao,
+                          GithubService githubService) {
         this.db = db;
         this.repoDao = repoDao;
         this.githubService = githubService;

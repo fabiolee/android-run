@@ -3,7 +3,7 @@ package com.blogspot.carirunners.run.repository;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.api.RepoSearchResponse;
-import com.blogspot.carirunners.run.db.GithubDb;
+import com.blogspot.carirunners.run.db.AppDatabase;
 import com.blogspot.carirunners.run.db.RepoDao;
 import com.blogspot.carirunners.run.util.AbsentLiveData;
 import com.blogspot.carirunners.run.util.InstantAppExecutors;
@@ -57,7 +57,7 @@ public class RepoRepositoryTest {
     public void init() {
         dao = mock(RepoDao.class);
         service = mock(GithubService.class);
-        GithubDb db = mock(GithubDb.class);
+        AppDatabase db = mock(AppDatabase.class);
         when(db.repoDao()).thenReturn(dao);
         repository = new RepoRepository(new InstantAppExecutors(), db, dao, service);
     }

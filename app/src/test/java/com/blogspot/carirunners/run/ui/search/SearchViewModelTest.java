@@ -1,8 +1,9 @@
 package com.blogspot.carirunners.run.ui.search;
 
 
+import com.blogspot.carirunners.run.repository.PostRepository;
 import com.blogspot.carirunners.run.repository.RepoRepository;
-import com.blogspot.carirunners.run.vo.Repo;
+import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.Resource;
 
 import org.junit.Before;
@@ -32,86 +33,87 @@ public class SearchViewModelTest {
     @Rule
     public InstantTaskExecutorRule instantExecutor = new InstantTaskExecutorRule();
     private SearchViewModel viewModel;
-    private RepoRepository repository;
+    private PostRepository postRepository;
+    private RepoRepository repoRepository;
 
     @Before
     public void init() {
-        repository = mock(RepoRepository.class);
-        viewModel = new SearchViewModel(repository);
+        repoRepository = mock(RepoRepository.class);
+        viewModel = new SearchViewModel(postRepository, repoRepository);
     }
 
     @Test
     public void empty() {
-        Observer<Resource<List<Repo>>> result = mock(Observer.class);
+        Observer<Resource<List<Post>>> result = mock(Observer.class);
         viewModel.getResults().observeForever(result);
         viewModel.loadNextPage();
-        verifyNoMoreInteractions(repository);
+        verifyNoMoreInteractions(repoRepository);
     }
 
     @Test
     public void basic() {
-        Observer<Resource<List<Repo>>> result = mock(Observer.class);
+        Observer<Resource<List<Post>>> result = mock(Observer.class);
         viewModel.getResults().observeForever(result);
         viewModel.setQuery("foo");
-        verify(repository).search("foo");
-        verify(repository, never()).searchNextPage("foo");
+        verify(repoRepository).search("foo");
+        verify(repoRepository, never()).searchNextPage("foo");
     }
 
     @Test
     public void noObserverNoQuery() {
-        when(repository.searchNextPage("foo")).thenReturn(mock(LiveData.class));
+        when(repoRepository.searchNextPage("foo")).thenReturn(mock(LiveData.class));
         viewModel.setQuery("foo");
-        verify(repository, never()).search("foo");
+        verify(repoRepository, never()).search("foo");
         // next page is user interaction and even if loading state is not observed, we query
         // would be better to avoid that if main search query is not observed
         viewModel.loadNextPage();
-        verify(repository).searchNextPage("foo");
+        verify(repoRepository).searchNextPage("foo");
     }
 
     @Test
     public void swap() {
         LiveData<Resource<Boolean>> nextPage = new MutableLiveData<>();
-        when(repository.searchNextPage("foo")).thenReturn(nextPage);
+        when(repoRepository.searchNextPage("foo")).thenReturn(nextPage);
 
-        Observer<Resource<List<Repo>>> result = mock(Observer.class);
+        Observer<Resource<List<Post>>> result = mock(Observer.class);
         viewModel.getResults().observeForever(result);
-        verifyNoMoreInteractions(repository);
+        verifyNoMoreInteractions(repoRepository);
         viewModel.setQuery("foo");
-        verify(repository).search("foo");
+        verify(repoRepository).search("foo");
         viewModel.loadNextPage();
 
         viewModel.getLoadMoreStatus().observeForever(mock(Observer.class));
-        verify(repository).searchNextPage("foo");
+        verify(repoRepository).searchNextPage("foo");
         assertThat(nextPage.hasActiveObservers(), is(true));
         viewModel.setQuery("bar");
         assertThat(nextPage.hasActiveObservers(), is(false));
-        verify(repository).search("bar");
-        verify(repository, never()).searchNextPage("bar");
+        verify(repoRepository).search("bar");
+        verify(repoRepository, never()).searchNextPage("bar");
     }
 
     @Test
     public void refresh() {
         viewModel.refresh();
-        verifyNoMoreInteractions(repository);
+        verifyNoMoreInteractions(repoRepository);
         viewModel.setQuery("foo");
         viewModel.refresh();
-        verifyNoMoreInteractions(repository);
+        verifyNoMoreInteractions(repoRepository);
         viewModel.getResults().observeForever(mock(Observer.class));
-        verify(repository).search("foo");
-        reset(repository);
+        verify(repoRepository).search("foo");
+        reset(repoRepository);
         viewModel.refresh();
-        verify(repository).search("foo");
+        verify(repoRepository).search("foo");
     }
 
     @Test
     public void resetSameQuery() {
         viewModel.getResults().observeForever(mock(Observer.class));
         viewModel.setQuery("foo");
-        verify(repository).search("foo");
-        reset(repository);
+        verify(repoRepository).search("foo");
+        reset(repoRepository);
         viewModel.setQuery("FOO");
-        verifyNoMoreInteractions(repository);
+        verifyNoMoreInteractions(repoRepository);
         viewModel.setQuery("bar");
-        verify(repository).search("bar");
+        verify(repoRepository).search("bar");
     }
 }

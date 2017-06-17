@@ -5,7 +5,7 @@ import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.SearchFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
-import com.blogspot.carirunners.run.ui.common.RepoListAdapter;
+import com.blogspot.carirunners.run.ui.common.PostListAdapter;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 
 import android.arch.lifecycle.LifecycleFragment;
@@ -42,7 +42,7 @@ public class SearchFragment extends LifecycleFragment implements Injectable {
 
     AutoClearedValue<SearchFragmentBinding> binding;
 
-    AutoClearedValue<RepoListAdapter> adapter;
+    AutoClearedValue<PostListAdapter> adapter;
 
     private SearchViewModel searchViewModel;
 
@@ -62,8 +62,9 @@ public class SearchFragment extends LifecycleFragment implements Injectable {
         super.onActivityCreated(savedInstanceState);
         searchViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel.class);
         initRecyclerView();
-        RepoListAdapter rvAdapter = new RepoListAdapter(dataBindingComponent, true,
-                repo -> navigationController.navigateToRepo(repo.owner.login, repo.name));
+        PostListAdapter rvAdapter = new PostListAdapter(dataBindingComponent, true,
+                null);
+                //repo -> navigationController.navigateToRepo(repo.owner.login, repo.name));
         binding.get().repoList.setAdapter(rvAdapter);
         adapter = new AutoClearedValue<>(this, rvAdapter);
 

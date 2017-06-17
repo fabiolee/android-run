@@ -5,7 +5,7 @@ import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.UserFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
-import com.blogspot.carirunners.run.ui.common.RepoListAdapter;
+import com.blogspot.carirunners.run.ui.common.PostListAdapter;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 
 import android.arch.lifecycle.LifecycleFragment;
@@ -31,7 +31,7 @@ public class UserFragment extends LifecycleFragment implements Injectable {
     DataBindingComponent dataBindingComponent = new FragmentDataBindingComponent(this);
     private UserViewModel userViewModel;
     private AutoClearedValue<UserFragmentBinding> binding;
-    private AutoClearedValue<RepoListAdapter> adapter;
+    private AutoClearedValue<PostListAdapter> adapter;
 
     public static UserFragment create(String login) {
         UserFragment userFragment = new UserFragment();
@@ -63,8 +63,9 @@ public class UserFragment extends LifecycleFragment implements Injectable {
             // this is only necessary because espresso cannot read data binding callbacks.
             binding.get().executePendingBindings();
         });
-        RepoListAdapter rvAdapter = new RepoListAdapter(dataBindingComponent, false,
-                repo -> navigationController.navigateToRepo(repo.owner.login, repo.name));
+        PostListAdapter rvAdapter = new PostListAdapter(dataBindingComponent, false,
+                null);
+                //repo -> navigationController.navigateToRepo(repo.owner.login, repo.name));
         binding.get().repoList.setAdapter(rvAdapter);
         this.adapter = new AutoClearedValue<>(this, rvAdapter);
         initRepoList();
@@ -77,7 +78,7 @@ public class UserFragment extends LifecycleFragment implements Injectable {
             if (repos == null) {
                 adapter.get().replace(null);
             } else {
-                adapter.get().replace(repos.data);
+                //adapter.get().replace(repos.data);
             }
         });
     }

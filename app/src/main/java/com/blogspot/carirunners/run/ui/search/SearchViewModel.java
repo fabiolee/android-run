@@ -1,9 +1,10 @@
 package com.blogspot.carirunners.run.ui.search;
 
+import com.blogspot.carirunners.run.repository.PostRepository;
 import com.blogspot.carirunners.run.repository.RepoRepository;
 import com.blogspot.carirunners.run.util.AbsentLiveData;
 import com.blogspot.carirunners.run.util.Objects;
-import com.blogspot.carirunners.run.vo.Repo;
+import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.Resource;
 
 import android.arch.lifecycle.LiveData;
@@ -24,23 +25,23 @@ public class SearchViewModel extends ViewModel {
 
     private final MutableLiveData<String> query = new MutableLiveData<>();
 
-    private final LiveData<Resource<List<Repo>>> results;
+    private final LiveData<Resource<List<Post>>> results;
 
     private final NextPageHandler nextPageHandler;
 
     @Inject
-    SearchViewModel(RepoRepository repoRepository) {
+    SearchViewModel(PostRepository postRepository, RepoRepository repoRepository) {
         nextPageHandler = new NextPageHandler(repoRepository);
         results = Transformations.switchMap(query, search -> {
             if (search == null || search.trim().length() == 0) {
                 return AbsentLiveData.create();
             } else {
-                return repoRepository.search(search);
+                return postRepository.search(search);
             }
         });
     }
 
-    LiveData<Resource<List<Repo>>> getResults() {
+    LiveData<Resource<List<Post>>> getResults() {
         return results;
     }
 

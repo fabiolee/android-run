@@ -1,6 +1,5 @@
 package com.blogspot.carirunners.run;
 
-import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 
 import android.arch.lifecycle.LifecycleRegistry;
