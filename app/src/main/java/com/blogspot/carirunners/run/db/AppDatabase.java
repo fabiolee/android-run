@@ -2,6 +2,7 @@ package com.blogspot.carirunners.run.db;
 
 
 import com.blogspot.carirunners.run.vo.Contributor;
+import com.blogspot.carirunners.run.vo.Page;
 import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.Repo;
 import com.blogspot.carirunners.run.vo.RepoSearchResult;
@@ -14,6 +15,7 @@ import android.arch.persistence.room.RoomDatabase;
  * Main database description.
  */
 @Database(entities = {
+        Page.class,
         Post.class,
         User.class,
         Repo.class,
@@ -21,9 +23,11 @@ import android.arch.persistence.room.RoomDatabase;
         RepoSearchResult.class
 }, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
+    public abstract PageDao pageDao();
+
     public abstract PostDao postDao();
 
-    abstract public UserDao userDao();
+    public abstract UserDao userDao();
 
-    abstract public RepoDao repoDao();
+    public abstract RepoDao repoDao();
 }

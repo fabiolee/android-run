@@ -7,6 +7,7 @@ import com.blogspot.carirunners.run.BuildConfig;
 import com.blogspot.carirunners.run.api.BloggerService;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.db.AppDatabase;
+import com.blogspot.carirunners.run.db.PageDao;
 import com.blogspot.carirunners.run.db.PostDao;
 import com.blogspot.carirunners.run.db.RepoDao;
 import com.blogspot.carirunners.run.db.UserDao;
@@ -60,6 +61,12 @@ class AppModule {
     @Provides
     AppDatabase provideDb(Application app) {
         return Room.databaseBuilder(app, AppDatabase.class, "app.db").build();
+    }
+
+    @Singleton
+    @Provides
+    PageDao providePageDao(AppDatabase db) {
+        return db.pageDao();
     }
 
     @Singleton

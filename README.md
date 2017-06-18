@@ -6,6 +6,8 @@ This is a mobile app that uses Android Architecture Components with Dagger 2.
 The app is composed of 3 main screens.
 ### SearchFragment
 Allows you to search posts on Blogger.
+### PageFragment
+This fragment displays a page.
 ### RepoFragment
 This fragment displays the details of a repository and its contributors.
 ### UserFragment

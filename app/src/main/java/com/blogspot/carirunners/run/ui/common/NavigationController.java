@@ -2,6 +2,7 @@ package com.blogspot.carirunners.run.ui.common;
 
 import com.blogspot.carirunners.run.MainActivity;
 import com.blogspot.carirunners.run.R;
+import com.blogspot.carirunners.run.ui.page.PageFragment;
 import com.blogspot.carirunners.run.ui.repo.RepoFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 public class NavigationController {
     private final int containerId;
     private final FragmentManager fragmentManager;
+
     @Inject
     public NavigationController(MainActivity mainActivity) {
         this.containerId = R.id.container;
@@ -26,6 +28,15 @@ public class NavigationController {
         SearchFragment searchFragment = new SearchFragment();
         fragmentManager.beginTransaction()
                 .replace(containerId, searchFragment)
+                .commitAllowingStateLoss();
+    }
+
+    public void navigateToPage() {
+        String tag = "page";
+        PageFragment fragment = new PageFragment();
+        fragmentManager.beginTransaction()
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
