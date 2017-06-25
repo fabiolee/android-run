@@ -7,22 +7,29 @@ import com.blogspot.carirunners.run.databinding.PageFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
-import com.blogspot.carirunners.run.vo.Page;
-import com.blogspot.carirunners.run.vo.Resource;
+import com.blogspot.carirunners.run.vo.PageItem;
 
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -42,6 +49,7 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
 
     DataBindingComponent dataBindingComponent = new FragmentDataBindingComponent(this);
     AutoClearedValue<PageFragmentBinding> binding;
+    AutoClearedValue<PageItemAdapter> adapter;
 
     @Override
     public LifecycleRegistry getLifecycle() {
@@ -53,12 +61,14 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PageViewModel.class);
         viewModel.setId(BloggerService.PAGE_ID);
-        LiveData<Resource<Page>> page = viewModel.getPage();
-        page.observe(this, resource -> {
-            binding.get().setPage(resource == null ? null : resource.data);
-            binding.get().setPageResource(resource);
-            binding.get().executePendingBindings();
-        });
+
+        PageItemAdapter adapter = new PageItemAdapter(dataBindingComponent,
+                null);
+        //pageItem -> navigationController.navigateToPost(pageItem.urlPath));
+        this.adapter = new AutoClearedValue<>(this, adapter);
+        binding.get().pageItemList.setAdapter(adapter);
+
+        initView(viewModel);
     }
 
     @Nullable
@@ -70,5 +80,29 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
         dataBinding.setRetryCallback(() -> viewModel.retry());
         binding = new AutoClearedValue<>(this, dataBinding);
         return dataBinding.getRoot();
+    }
+
+    private void initView(PageViewModel viewModel) {
+        viewModel.getPage().observe(this, resource -> {
+            binding.get().setPage(resource == null ? null : resource.data);
+            binding.get().setPageResource(resource);
+            binding.get().executePendingBindings();
+            if (resource == null || resource.data == null) {
+                adapter.get().replace(null);
+            } else {
+                Document document = Jsoup.parse(resource.data.content);
+                Elements elements = document.select("ul li");
+                List<PageItem> pageItems = new ArrayList<>();
+                String title;
+                String urlPath;
+                for (Element element : elements) {
+                    title = element.text();
+                    urlPath = Uri.parse(element.select("a").attr("href"))
+                            .getPath();
+                    pageItems.add(new PageItem(title, urlPath));
+                }
+                adapter.get().replace(pageItems);
+            }
+        });
     }
 }

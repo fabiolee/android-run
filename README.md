@@ -50,6 +50,7 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 * [Retrofit][retrofit] for REST api communication
 * [Logging Interceptor][logging-interceptor] for logging REST api
 * [Glide][glide] for image loading
+* [jsoup][jsoup] for Java HTML parser
 * [Stetho][stetho] for debug bridge
 * [Timber][timber] for logging
 * [espresso][espresso] for UI tests
@@ -65,6 +66,7 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 [retrofit]: http://square.github.io/retrofit
 [logging-interceptor]: https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
 [glide]: https://github.com/bumptech/glide
+[jsoup]: https://jsoup.org
 [stetho]: https://github.com/facebook/stetho
 [timber]: https://github.com/JakeWharton/timber
 [mockito]: http://site.mockito.org
