@@ -1,4 +1,4 @@
-package com.blogspot.carirunners.run.ui.repo;
+package com.blogspot.carirunners.run.ui.post;
 
 import com.blogspot.carirunners.run.repository.RepoRepository;
 import com.blogspot.carirunners.run.vo.Contributor;
@@ -36,12 +36,12 @@ public class RepoViewModelTest {
     public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
 
     private RepoRepository repository;
-    private RepoViewModel repoViewModel;
+    private PostViewModel repoViewModel;
 
     @Before
     public void setup() {
         repository = mock(RepoRepository.class);
-        repoViewModel = new RepoViewModel(repository);
+        repoViewModel = new PostViewModel(repository);
     }
 
 
@@ -98,16 +98,16 @@ public class RepoViewModelTest {
 
     @Test
     public void resetId() {
-        Observer<RepoViewModel.RepoId> observer = mock(Observer.class);
+        Observer<PostViewModel.RepoId> observer = mock(Observer.class);
         repoViewModel.repoId.observeForever(observer);
         verifyNoMoreInteractions(observer);
         repoViewModel.setId("foo", "bar");
-        verify(observer).onChanged(new RepoViewModel.RepoId("foo", "bar"));
+        verify(observer).onChanged(new PostViewModel.RepoId("foo", "bar"));
         reset(observer);
         repoViewModel.setId("foo", "bar");
         verifyNoMoreInteractions(observer);
         repoViewModel.setId("a", "b");
-        verify(observer).onChanged(new RepoViewModel.RepoId("a", "b"));
+        verify(observer).onChanged(new PostViewModel.RepoId("a", "b"));
     }
 
     @Test

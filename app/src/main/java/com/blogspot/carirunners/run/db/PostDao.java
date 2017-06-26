@@ -26,4 +26,10 @@ public interface PostDao {
 
     @Query("SELECT * FROM Post")
     LiveData<List<Post>> load();
+
+    @Query("SELECT * FROM Post WHERE id = :id")
+    LiveData<Post> load(String id);
+
+    @Query("SELECT * FROM Post WHERE url LIKE :path")
+    LiveData<Post> loadByPath(String path);
 }

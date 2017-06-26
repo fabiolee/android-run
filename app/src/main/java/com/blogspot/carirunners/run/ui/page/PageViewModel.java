@@ -26,7 +26,7 @@ public class PageViewModel extends ViewModel {
             if (id == null) {
                 return AbsentLiveData.create();
             } else {
-                return repository.loadPage(id);
+                return repository.load(id);
             }
         });
     }

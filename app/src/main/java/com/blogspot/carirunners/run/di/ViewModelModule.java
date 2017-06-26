@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.blogspot.carirunners.run.ui.page.PageViewModel;
-import com.blogspot.carirunners.run.ui.repo.RepoViewModel;
+import com.blogspot.carirunners.run.ui.post.PostViewModel;
 import com.blogspot.carirunners.run.ui.search.SearchViewModel;
 import com.blogspot.carirunners.run.ui.user.UserViewModel;
 import com.blogspot.carirunners.run.viewmodel.ViewModelFactory;
@@ -22,6 +22,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(PostViewModel.class)
+    abstract ViewModel bindPostViewModel(PostViewModel viewModel);
+
+    @Binds
+    @IntoMap
     @ViewModelKey(UserViewModel.class)
     abstract ViewModel bindUserViewModel(UserViewModel viewModel);
 
@@ -29,11 +34,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel.class)
     abstract ViewModel bindSearchViewModel(SearchViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(RepoViewModel.class)
-    abstract ViewModel bindRepoViewModel(RepoViewModel viewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);

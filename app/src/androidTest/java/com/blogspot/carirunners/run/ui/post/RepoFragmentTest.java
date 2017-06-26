@@ -1,4 +1,4 @@
-package com.blogspot.carirunners.run.ui.repo;
+package com.blogspot.carirunners.run.ui.post;
 
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.binding.FragmentBindingAdapters;
@@ -50,8 +50,8 @@ public class RepoFragmentTest {
             new TaskExecutorWithIdlingResourceRule();
     private MutableLiveData<Resource<Repo>> repo = new MutableLiveData<>();
     private MutableLiveData<Resource<List<Contributor>>> contributors = new MutableLiveData<>();
-    private RepoFragment repoFragment;
-    private RepoViewModel viewModel;
+    private PostFragment repoFragment;
+    private PostViewModel viewModel;
 
     private FragmentBindingAdapters fragmentBindingAdapters;
     private NavigationController navigationController;
@@ -59,8 +59,8 @@ public class RepoFragmentTest {
 
     @Before
     public void init() {
-        repoFragment = RepoFragment.create("a", "b");
-        viewModel = mock(RepoViewModel.class);
+        repoFragment = PostFragment.create("a", "b");
+        viewModel = mock(PostViewModel.class);
         fragmentBindingAdapters = mock(FragmentBindingAdapters.class);
         navigationController = mock(NavigationController.class);
 

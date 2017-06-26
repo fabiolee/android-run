@@ -3,7 +3,7 @@ package com.blogspot.carirunners.run.ui.common;
 import com.blogspot.carirunners.run.MainActivity;
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.ui.page.PageFragment;
-import com.blogspot.carirunners.run.ui.repo.RepoFragment;
+import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
 
@@ -36,13 +36,13 @@ public class NavigationController {
         PageFragment fragment = new PageFragment();
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment, tag)
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
-    public void navigateToRepo(String owner, String name) {
-        RepoFragment fragment = RepoFragment.create(owner, name);
-        String tag = "repo" + "/" + owner + "/" + name;
+    public void navigateToPost(String id, String path) {
+        PostFragment fragment = PostFragment.newInstance(id, path);
+        String tag = "post" + "/" + id + "/path/" + path;
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment, tag)
                 .addToBackStack(null)

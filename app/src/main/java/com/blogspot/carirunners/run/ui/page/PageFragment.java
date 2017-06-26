@@ -63,8 +63,7 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
         viewModel.setId(BloggerService.PAGE_ID);
 
         PageItemAdapter adapter = new PageItemAdapter(dataBindingComponent,
-                null);
-        //pageItem -> navigationController.navigateToPost(pageItem.urlPath));
+                pageItem -> navigationController.navigateToPost(null, pageItem.urlPath));
         this.adapter = new AutoClearedValue<>(this, adapter);
         binding.get().pageItemList.setAdapter(adapter);
 

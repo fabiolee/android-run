@@ -40,6 +40,58 @@ public class PostRepository {
         this.bloggerService = bloggerService;
     }
 
+    public LiveData<Resource<Post>> load(String id) {
+        return new NetworkBoundResource<Post, Post>(appExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull Post item) {
+                postDao.insert(item);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable Post data) {
+                return data == null;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Post> loadFromDb() {
+                return postDao.load(id);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Post>> createCall() {
+                return bloggerService.getPost(id);
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<Post>> loadByPath(String path) {
+        return new NetworkBoundResource<Post, Post>(appExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull Post item) {
+                postDao.insert(item);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable Post data) {
+                return data == null;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Post> loadFromDb() {
+                return postDao.loadByPath("%" + path);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Post>> createCall() {
+                return bloggerService.getPostByPath(path);
+            }
+        }.asLiveData();
+    }
+
     public LiveData<Resource<List<Post>>> search(String query) {
         return new NetworkBoundResource<List<Post>, PostSearchResponse>(appExecutors) {
             @Override

@@ -3,6 +3,7 @@ package com.blogspot.carirunners.run.api;
 import android.arch.lifecycle.LiveData;
 
 import com.blogspot.carirunners.run.vo.Page;
+import com.blogspot.carirunners.run.vo.Post;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -21,4 +22,10 @@ public interface BloggerService {
 
     @GET("pages/{id}?key=" + API_KEY)
     LiveData<ApiResponse<Page>> getPage(@Path("id") String id);
+
+    @GET("posts/{id}?key=" + API_KEY)
+    LiveData<ApiResponse<Post>> getPost(@Path("id") String id);
+
+    @GET("posts/bypath?key=" + API_KEY)
+    LiveData<ApiResponse<Post>> getPostByPath(@Query("path") String path);
 }

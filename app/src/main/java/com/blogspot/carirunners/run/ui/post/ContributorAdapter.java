@@ -1,4 +1,4 @@
-package com.blogspot.carirunners.run.ui.repo;
+package com.blogspot.carirunners.run.ui.post;
 
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.databinding.ContributorItemBinding;

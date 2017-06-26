@@ -1,7 +1,7 @@
 package com.blogspot.carirunners.run.di;
 
 import com.blogspot.carirunners.run.ui.page.PageFragment;
-import com.blogspot.carirunners.run.ui.repo.RepoFragment;
+import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
 
@@ -14,7 +14,7 @@ public abstract class FragmentBuildersModule {
     abstract PageFragment contributePageFragment();
 
     @ContributesAndroidInjector
-    abstract RepoFragment contributeRepoFragment();
+    abstract PostFragment contributePostFragment();
 
     @ContributesAndroidInjector
     abstract UserFragment contributeUserFragment();

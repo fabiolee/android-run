@@ -34,7 +34,7 @@ public class PageRepository {
         this.bloggerService = bloggerService;
     }
 
-    public LiveData<Resource<Page>> loadPage(String id) {
+    public LiveData<Resource<Page>> load(String id) {
         return new NetworkBoundResource<Page, Page>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Page item) {

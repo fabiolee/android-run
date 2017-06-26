@@ -3,13 +3,13 @@ Cari Runners Blogger with Android Architecture Components
 This is a mobile app that uses Android Architecture Components with Dagger 2.
 
 ## Functionality
-The app is composed of 3 main screens.
+The app is composed of 4 main screens.
 ### SearchFragment
 Allows you to search posts on Blogger.
 ### PageFragment
 This fragment displays a page.
-### RepoFragment
-This fragment displays the details of a repository and its contributors.
+### PostFragment
+This fragment displays the details of a post.
 ### UserFragment
 This fragment displays a user and their repositories.
 
