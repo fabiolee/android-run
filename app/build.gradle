@@ -8,8 +8,16 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "com.blogspot.carirunners.run.util.AppTestRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile file("keystore")
+            storePassword "abc123"
+            keyAlias "run"
+            keyPassword "abc123"
+        }
     }
     buildTypes {
         debug {
@@ -18,6 +26,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     dataBinding {

@@ -1,3 +1,4 @@
+![feature-graphic](https://raw.githubusercontent.com/fabiolee/run/master/art/feature-graphic.png)
 Cari Runners Blogger with Android Architecture Components
 
 This is a mobile app that uses Android Architecture Components with Dagger 2.
