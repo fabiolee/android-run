@@ -9,6 +9,9 @@
             name="post"
             type="com.blogspot.carirunners.run.vo.Post"/>
         <variable
+            name="postContent"
+            type="com.blogspot.carirunners.run.vo.PostContent"/>
+        <variable
             name="postResource"
             type="Resource"/>
         <variable name="retryCallback"
@@ -27,27 +30,34 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_margin="8dp"
                 app:visibleGone="@{post != null}"
                 android:text="@{post.title}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="title of the post"/>
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:contentDescription="@null"
+                app:imageUrl="@{postContent.logoUrl}"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@mipmap/ic_launcher"/>
             <TextView
                 android:id="@+id/content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_margin="8dp"
                 android:autoLink="web"
-                app:visibleGone="@{post != null}"
-                android:text='@{post.content == null ? "" : Html.fromHtml(post.content)}'
+                app:visibleGone="@{postContent != null}"
+                android:text='@{postContent.htmlContent == null ? "" : Html.fromHtml(postContent.htmlContent)}'
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/logo"
                 tools:text="content of the post"/>
             <include layout="@layout/loading_state"
                      app:resource="@{postResource}"

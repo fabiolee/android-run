@@ -7,11 +7,10 @@ import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 import com.blogspot.carirunners.run.vo.Post;
-import com.blogspot.carirunners.run.vo.Resource;
+import com.blogspot.carirunners.run.vo.PostContent;
 
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingComponent;
@@ -22,6 +21,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import javax.inject.Inject;
 
@@ -73,9 +76,24 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
             path = args.getString(KEY_PATH);
         }
         viewModel.setId(id, path);
-        LiveData<Resource<Post>> post = viewModel.getPost();
-        post.observe(this, resource -> {
-            binding.get().setPost(resource == null ? null : resource.data);
+        viewModel.getPost().observe(this, resource -> {
+            Post post;
+            PostContent postContent;
+            if (resource == null || resource.data == null) {
+                post = null;
+                postContent = null;
+            } else {
+                post = resource.data;
+                Document document = Jsoup.parseBodyFragment(post.content);
+                Elements firstElement = document.select("div");
+                Elements imgElement = firstElement.select("img");
+                String logoUrl = imgElement.attr("src");
+                firstElement.remove();
+                String htmlContent = document.body().html();
+                postContent = new PostContent(logoUrl, htmlContent);
+            }
+            binding.get().setPost(post);
+            binding.get().setPostContent(postContent);
             binding.get().setPostResource(resource);
             binding.get().executePendingBindings();
         });
@@ -85,8 +103,8 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        PostFragmentBinding dataBinding = DataBindingUtil
-                .inflate(inflater, R.layout.post_fragment, container, false);
+        PostFragmentBinding dataBinding = DataBindingUtil.inflate(inflater, R.layout.post_fragment,
+                container, false, dataBindingComponent);
         dataBinding.setRetryCallback(() -> viewModel.retry());
         binding = new AutoClearedValue<>(this, dataBinding);
         return dataBinding.getRoot();

@@ -89,7 +89,7 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
             if (resource == null || resource.data == null) {
                 adapter.get().replace(null);
             } else {
-                Document document = Jsoup.parse(resource.data.content);
+                Document document = Jsoup.parseBodyFragment(resource.data.content);
                 Elements elements = document.select("ul li");
                 List<PageItem> pageItems = new ArrayList<>();
                 String title;
