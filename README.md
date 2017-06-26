@@ -8,8 +8,10 @@ The app is composed of 4 main screens.
 Allows you to search posts on Blogger.
 ### PageFragment
 This fragment displays a page.
+![PageFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PageFragment.png)
 ### PostFragment
 This fragment displays the details of a post.
+![PostFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PostFragment.png)
 ### UserFragment
 This fragment displays a user and their repositories.
 
