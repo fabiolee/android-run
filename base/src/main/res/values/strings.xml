@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cari Runners</string>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://carirunners-57b89.firebaseapp.com\",\n  }\n}]</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="a11y_user_photo">user photo</string>
@@ -10,5 +11,4 @@
     <string name="empty_search_result">No results for <b>%s</b></string>
     <string name="a11y_contributor_avatar">contributor avatar</string>
     <string name="lbl_run">Run</string>
-    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://carirunners-57b89.firebaseapp.com\",\n  }\n}]</string>
 </resources>
