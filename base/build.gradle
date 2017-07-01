@@ -53,6 +53,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$squareRetrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$squareRetrofitVersion"
     compile "com.github.bumptech.glide:glide:$glide_version"
+    compile "com.google.android.instantapps:instantapps:$androidInstantAppsVersion"
     compile "com.google.dagger:dagger:$dagger_version"
     compile "com.google.dagger:dagger-android:$dagger_version"
     compile "com.google.dagger:dagger-android-support:$dagger_version"

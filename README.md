@@ -3,6 +3,9 @@ Cari Runners Blogger with Android Architecture Components
 
 This is a mobile app that uses Android Architecture Components with Dagger 2.
 
+## App Links
+https://carirunners-57b89.firebaseapp.com
+
 ## Functionality
 The app is composed of 4 main screens.
 ### SearchFragment

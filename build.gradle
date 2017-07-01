@@ -6,7 +6,7 @@ buildscript {
         maven { url 'https://maven.google.com' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-alpha4'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha5'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -16,11 +16,12 @@ buildscript {
 ext {
     compileSdkVersion = 25
     buildToolsVersion = "25.0.3"
-    minSdkVersion = 14
-    versionCode = 2
-    versionName = "1.0.1"
+    minSdkVersion = 14 // app: 14, instantapp: 19
+    versionCode = 3
+    versionName = "1.0.2"
 
     androidArchVersion = "1.0.0-alpha3"
+    androidInstantAppsVersion = "1.0.0"
     androidSupportVersion = "25.4.0"
     facebookStethoVersion = "1.5.0"
     jsoupVersion = "1.10.3"
