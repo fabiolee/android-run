@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -9,24 +9,11 @@ android {
         targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        testInstrumentationRunner "com.blogspot.carirunners.run.util.AppTestRunner"
-    }
-    signingConfigs {
-        release {
-            storeFile file("../keystore")
-            storePassword "abc123"
-            keyAlias "run"
-            keyPassword "abc123"
-        }
     }
     buildTypes {
-        debug {
-            testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
     dataBinding {
@@ -36,90 +23,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    sourceSets {
-        androidTest.java.srcDirs += "src/test-common/java"
-        test.java.srcDirs += "src/test-common/java"
-    }
-    lintOptions {
-        lintConfig rootProject.file('lint.xml')
-    }
-}
-
-jacoco {
-    toolVersion = "0.7.4+"
 }
 
 dependencies {
-    compile "android.arch.persistence.room:runtime:$androidArchVersion"
-    compile "android.arch.lifecycle:runtime:$androidArchVersion"
-    compile "android.arch.lifecycle:extensions:$androidArchVersion"
-    compile "com.android.support:appcompat-v7:$androidSupportVersion"
-    compile "com.android.support:recyclerview-v7:$androidSupportVersion"
-    compile "com.android.support:cardview-v7:$androidSupportVersion"
-    compile "com.android.support:design:$androidSupportVersion"
-    compile "com.facebook.stetho:stetho:$facebookStethoVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$squareOkHttpVersion"
-    compile "com.squareup.retrofit2:retrofit:$squareRetrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$squareRetrofitVersion"
-    compile "com.github.bumptech.glide:glide:$glide_version"
-    compile "com.google.dagger:dagger:$dagger_version"
-    compile "com.google.dagger:dagger-android:$dagger_version"
-    compile "com.google.dagger:dagger-android-support:$dagger_version"
-    compile "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-    compile "com.jakewharton.timber:timber:$timber_version"
-    compile "org.jsoup:jsoup:$jsoupVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$androidArchVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$androidArchVersion"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-
-    testCompile ("android.arch.core:core-testing:$androidArchVersion", {
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-core-utils'
-    })
-    testCompile "junit:junit:$junit_version"
-    testCompile "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
-
-    androidTestCompile "android.arch.core:core-testing:$androidArchVersion"
-    androidTestCompile "com.android.support:appcompat-v7:$androidSupportVersion"
-    androidTestCompile "com.android.support:recyclerview-v7:$androidSupportVersion"
-    androidTestCompile "com.android.support:support-v4:$androidSupportVersion"
-    androidTestCompile "com.android.support:design:$androidSupportVersion"
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    })
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$espresso_version", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-    })
-    androidTestCompile "org.mockito:mockito-android:$mockito_version"
-}
-
-task fullCoverageReport(type: JacocoReport) {
-    dependsOn 'createDebugCoverageReport'
-    dependsOn 'testDebugUnitTest'
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*',
-                      '**/*Test*.*', 'android/**/*.*',
-                      '**/*_MembersInjector.class',
-                      '**/Dagger*Component.class',
-                      '**/Dagger*Component$Builder.class',
-                      '**/*_*Factory.class',
-                      '**/*ComponentImpl.class',
-                      '**/*SubComponentBuilder.class']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ])
+    implementation project(':base')
 }
