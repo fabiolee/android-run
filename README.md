@@ -52,6 +52,7 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 * [Android Support Library][support-lib]
 * [Android Architecture Components][arch]
 * [Android Data Binding][data-binding]
+* [Google Play Services][google-services]
 * [Dagger 2][dagger2] for dependency injection
 * [Retrofit][retrofit] for REST api communication
 * [Logging Interceptor][logging-interceptor] for logging REST api
@@ -67,6 +68,7 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 [support-lib]: https://developer.android.com/topic/libraries/support-library/index.html
 [arch]: https://developer.android.com/arch
 [data-binding]: https://developer.android.com/topic/libraries/data-binding/index.html
+[google-services]: https://developer.android.com/google/index.html
 [espresso]: https://google.github.io/android-testing-support-library/docs/espresso/
 [dagger2]: https://google.github.io/dagger
 [retrofit]: http://square.github.io/retrofit
