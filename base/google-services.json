@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1091695528455",
+    "firebase_url": "https://carirunners-57b89.firebaseio.com",
+    "project_id": "carirunners-57b89",
+    "storage_bucket": "carirunners-57b89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091695528455:android:3adeaa6710ff5f38",
+        "android_client_info": {
+          "package_name": "com.blogspot.carirunners.run"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091695528455-nl2umtt0r58luvloghnbhe28ae9hn0gp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blogspot.carirunners.run",
+            "certificate_hash": "6486a0e5098f66423ede17f1d2a72f4bee28e670"
+          }
+        },
+        {
+          "client_id": "1091695528455-amjha5jtmh2gkpeo9esfunpausq4elpt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blogspot.carirunners.run",
+            "certificate_hash": "e3583aa6be310736e4f6003b3c976fd9d0377b34"
+          }
+        },
+        {
+          "client_id": "1091695528455-e094n2k8vlt65p2if2f0poaf43bgpc79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChhLx4_v8DGYPico1dIbDemhMxElNskhA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091695528455-e094n2k8vlt65p2if2f0poaf43bgpc79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
