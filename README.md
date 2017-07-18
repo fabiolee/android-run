@@ -3,6 +3,8 @@ Cari Runners Blogger with Android Architecture Components
 
 This is a mobile app that uses Android Architecture Components with Dagger 2.
 
+[![Build Status](https://travis-ci.org/fabiolee/run.svg?branch=master)](https://travis-ci.org/fabiolee/run)
+
 ## App Links
 https://carirunners-57b89.firebaseapp.com
 
