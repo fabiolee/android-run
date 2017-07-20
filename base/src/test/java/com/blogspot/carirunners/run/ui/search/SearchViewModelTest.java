@@ -7,6 +7,7 @@ import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.Resource;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +39,7 @@ public class SearchViewModelTest {
 
     @Before
     public void init() {
+        postRepository = mock(PostRepository.class);
         repoRepository = mock(RepoRepository.class);
         viewModel = new SearchViewModel(postRepository, repoRepository);
     }
@@ -47,7 +49,7 @@ public class SearchViewModelTest {
         Observer<Resource<List<Post>>> result = mock(Observer.class);
         viewModel.getResults().observeForever(result);
         viewModel.loadNextPage();
-        verifyNoMoreInteractions(repoRepository);
+        verifyNoMoreInteractions(postRepository);
     }
 
     @Test
@@ -55,65 +57,65 @@ public class SearchViewModelTest {
         Observer<Resource<List<Post>>> result = mock(Observer.class);
         viewModel.getResults().observeForever(result);
         viewModel.setQuery("foo");
-        verify(repoRepository).search("foo");
-        verify(repoRepository, never()).searchNextPage("foo");
+        verify(postRepository).search("foo");
+        verify(postRepository, never()).searchNextPage("foo");
     }
 
     @Test
     public void noObserverNoQuery() {
-        when(repoRepository.searchNextPage("foo")).thenReturn(mock(LiveData.class));
+        when(postRepository.searchNextPage("foo")).thenReturn(mock(LiveData.class));
         viewModel.setQuery("foo");
-        verify(repoRepository, never()).search("foo");
+        verify(postRepository, never()).search("foo");
         // next page is user interaction and even if loading state is not observed, we query
         // would be better to avoid that if main search query is not observed
         viewModel.loadNextPage();
-        verify(repoRepository).searchNextPage("foo");
+        verify(postRepository).searchNextPage("foo");
     }
 
     @Test
     public void swap() {
         LiveData<Resource<Boolean>> nextPage = new MutableLiveData<>();
-        when(repoRepository.searchNextPage("foo")).thenReturn(nextPage);
+        when(postRepository.searchNextPage("foo")).thenReturn(nextPage);
 
         Observer<Resource<List<Post>>> result = mock(Observer.class);
         viewModel.getResults().observeForever(result);
-        verifyNoMoreInteractions(repoRepository);
+        verifyNoMoreInteractions(postRepository);
         viewModel.setQuery("foo");
-        verify(repoRepository).search("foo");
+        verify(postRepository).search("foo");
         viewModel.loadNextPage();
 
         viewModel.getLoadMoreStatus().observeForever(mock(Observer.class));
-        verify(repoRepository).searchNextPage("foo");
+        verify(postRepository).searchNextPage("foo");
         assertThat(nextPage.hasActiveObservers(), is(true));
         viewModel.setQuery("bar");
         assertThat(nextPage.hasActiveObservers(), is(false));
-        verify(repoRepository).search("bar");
-        verify(repoRepository, never()).searchNextPage("bar");
+        verify(postRepository).search("bar");
+        verify(postRepository, never()).searchNextPage("bar");
     }
 
     @Test
     public void refresh() {
         viewModel.refresh();
-        verifyNoMoreInteractions(repoRepository);
+        verifyNoMoreInteractions(postRepository);
         viewModel.setQuery("foo");
         viewModel.refresh();
-        verifyNoMoreInteractions(repoRepository);
+        verifyNoMoreInteractions(postRepository);
         viewModel.getResults().observeForever(mock(Observer.class));
-        verify(repoRepository).search("foo");
-        reset(repoRepository);
+        verify(postRepository).search("foo");
+        reset(postRepository);
         viewModel.refresh();
-        verify(repoRepository).search("foo");
+        verify(postRepository).search("foo");
     }
 
     @Test
     public void resetSameQuery() {
         viewModel.getResults().observeForever(mock(Observer.class));
         viewModel.setQuery("foo");
-        verify(repoRepository).search("foo");
-        reset(repoRepository);
+        verify(postRepository).search("foo");
+        reset(postRepository);
         viewModel.setQuery("FOO");
-        verifyNoMoreInteractions(repoRepository);
+        verifyNoMoreInteractions(postRepository);
         viewModel.setQuery("bar");
-        verify(repoRepository).search("bar");
+        verify(postRepository).search("bar");
     }
 }

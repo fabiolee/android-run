@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -132,5 +133,9 @@ public class PostRepository {
                 return body;
             }
         }.asLiveData();
+    }
+
+    public LiveData<Resource<Boolean>> searchNextPage(String query) {
+        return new MutableLiveData<>();
     }
 }
