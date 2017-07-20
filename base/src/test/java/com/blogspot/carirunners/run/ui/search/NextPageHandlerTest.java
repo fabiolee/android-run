@@ -1,6 +1,6 @@
 package com.blogspot.carirunners.run.ui.search;
 
-import com.blogspot.carirunners.run.repository.RepoRepository;
+import com.blogspot.carirunners.run.repository.PostRepository;
 import com.blogspot.carirunners.run.vo.Resource;
 
 import org.junit.Before;
@@ -27,11 +27,11 @@ public class NextPageHandlerTest {
 
     private SearchViewModel.NextPageHandler pageHandler;
 
-    private RepoRepository repository;
+    private PostRepository repository;
 
     @Before
     public void init() {
-        repository = mock(RepoRepository.class);
+        repository = mock(PostRepository.class);
         pageHandler = new SearchViewModel.NextPageHandler(repository);
     }
 

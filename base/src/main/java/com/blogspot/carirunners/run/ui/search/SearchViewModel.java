@@ -31,7 +31,7 @@ public class SearchViewModel extends ViewModel {
 
     @Inject
     SearchViewModel(PostRepository postRepository, RepoRepository repoRepository) {
-        nextPageHandler = new NextPageHandler(repoRepository);
+        nextPageHandler = new NextPageHandler(postRepository);
         results = Transformations.switchMap(query, search -> {
             if (search == null || search.trim().length() == 0) {
                 return AbsentLiveData.create();
@@ -105,12 +105,12 @@ public class SearchViewModel extends ViewModel {
         private LiveData<Resource<Boolean>> nextPageLiveData;
         private final MutableLiveData<LoadMoreState> loadMoreState = new MutableLiveData<>();
         private String query;
-        private final RepoRepository repository;
+        private final PostRepository repository;
         @VisibleForTesting
         boolean hasMore;
 
         @VisibleForTesting
-        NextPageHandler(RepoRepository repository) {
+        NextPageHandler(PostRepository repository) {
             this.repository = repository;
             reset();
         }

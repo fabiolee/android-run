@@ -19,4 +19,4 @@ android:
     - sys-img-armeabi-v7a-android-25
 
 script:
-  - ./gradlew clean :app:assemble :instantapp:assemble
+  - ./gradlew clean :app:assemble :instantapp:assemble test
