@@ -24,11 +24,11 @@
         <android.support.constraint.ConstraintLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/title"
                 style="@style/TextAppearance.AppCompat.Headline"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:visibleGone="@{post != null}"
@@ -38,7 +38,7 @@
                 tools:text="title of the post"/>
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:contentDescription="@null"
@@ -47,18 +47,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@mipmap/ic_launcher"/>
-            <TextView
+            <WebView
                 android:id="@+id/content"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:autoLink="web"
-                app:visibleGone="@{postContent != null}"
-                android:text='@{postContent.htmlContent == null ? "" : Html.fromHtml(postContent.htmlContent)}'
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logo"
-                tools:text="content of the post"/>
+                app:loadDataWithBaseURL="@{postContent.htmlContent}"
+                app:visibleGone="@{postContent != null}"/>
             <include layout="@layout/loading_state"
                      app:resource="@{postResource}"
                      app:callback="@{() -> retryCallback.retry()}"

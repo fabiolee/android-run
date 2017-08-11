@@ -48,7 +48,6 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
 
     DataBindingComponent dataBindingComponent = new FragmentDataBindingComponent(this);
     AutoClearedValue<PostFragmentBinding> binding;
-    AutoClearedValue<ContributorAdapter> adapter;
 
     public static PostFragment newInstance(String id, String path) {
         PostFragment fragment = new PostFragment();

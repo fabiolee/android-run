@@ -116,14 +116,6 @@ public class UserFragmentTest {
     }
 
     @Test
-    public void clickRepo() {
-        List<Repo> repos = setRepos(2);
-        Repo selected = repos.get(1);
-        onView(withText(selected.description)).perform(click());
-        verify(navigationController).navigateToRepo(selected.owner.login, selected.name);
-    }
-
-    @Test
     public void nullUser() {
         userData.postValue(null);
         onView(withId(R.id.name)).check(matches(not(isDisplayed())));

@@ -130,7 +130,7 @@ public class SearchFragmentTest {
     }
 
     @Test
-    public void navigateToRepo() throws Throwable {
+    public void navigateToPost() throws Throwable {
         Post post = TestUtil.createPost("2013-05-27T11:16:00+08:00",
                 "2013-05-27T11:16:11+08:00",
                 "http://carirunners.blogspot.com/2013/05/kul-imu-charity-run-2013.html",
@@ -138,7 +138,7 @@ public class SearchFragmentTest {
                 Arrays.asList("kuala lumpur", "race", "road"));
         results.postValue(Resource.success(Arrays.asList(post)));
         onView(withText("desc")).perform(click());
-        verify(navigationController).navigateToRepo("foo", "bar");
+        verify(navigationController).navigateToPost("foo", "bar");
     }
 
     @Test

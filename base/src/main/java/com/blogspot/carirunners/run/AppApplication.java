@@ -4,7 +4,7 @@ import com.blogspot.carirunners.run.di.AppInjector;
 import com.facebook.stetho.Stetho;
 
 import android.app.Activity;
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import javax.inject.Inject;
 
@@ -13,7 +13,7 @@ import dagger.android.HasActivityInjector;
 import timber.log.Timber;
 
 
-public class AppApplication extends Application implements HasActivityInjector {
+public class AppApplication extends MultiDexApplication implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;

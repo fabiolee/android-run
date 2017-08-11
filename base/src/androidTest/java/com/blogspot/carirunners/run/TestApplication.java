@@ -1,6 +1,6 @@
 package com.blogspot.carirunners.run;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.blogspot.carirunners.run.util.AppTestRunner;
 
@@ -9,7 +9,7 @@ import com.blogspot.carirunners.run.util.AppTestRunner;
  * <p>
  * See {@link AppTestRunner}.
  */
-public class TestApplication extends Application {
+public class TestApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
