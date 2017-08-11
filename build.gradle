@@ -12,8 +12,8 @@ buildscript {
 ext {
     compileSdkVersion = 26
     buildToolsVersion = "26.0.1"
-    minSdkVersion = 14 // app: 14, instantapp: 19
-    versionCode = 3
+    minSdkVersion = 14
+    versionCode = 4
     versionName = "1.0.3"
 
     androidArchVersion = "1.0.0-alpha3"
