@@ -80,7 +80,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
                 this, getString(R.string.notification_channel_id))
-                .setSmallIcon(R.drawable.ic_directions_run_black_24dp)
+                .setSmallIcon(R.drawable.ic_directions_run_white_24dp)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
                         R.mipmap.ic_launcher_round))
                 .setColor(getResources().getColor(R.color.accent))

@@ -21,7 +21,7 @@ import android.arch.persistence.room.RoomDatabase;
         Repo.class,
         Contributor.class,
         RepoSearchResult.class
-}, version = 1)
+}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PageDao pageDao();
 
