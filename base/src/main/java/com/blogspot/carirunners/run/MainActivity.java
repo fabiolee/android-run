@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run;
 
 import com.blogspot.carirunners.run.ui.common.NavigationController;
+import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.google.android.instantapps.InstantApps;
 
 import android.arch.lifecycle.LifecycleRegistry;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
         if (savedInstanceState == null) {
             navigationController.navigateToPage();
         }
+        parseIntent(getIntent());
     }
 
     @Override
@@ -74,7 +76,20 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //parseIntent(intent);
+    }
+
+    @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    private void parseIntent(Intent intent) {
+        String urlPath = intent.getStringExtra(PostFragment.KEY_PATH);
+        if (urlPath != null) {
+            navigationController.navigateToPost(null, urlPath);
+        }
     }
 }

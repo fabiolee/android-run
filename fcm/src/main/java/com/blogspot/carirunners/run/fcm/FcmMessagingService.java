@@ -14,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
 import com.blogspot.carirunners.run.MainActivity;
+import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -23,15 +24,20 @@ import timber.log.Timber;
  * @author fabiolee
  */
 public class FcmMessagingService extends FirebaseMessagingService {
-    private static final String CHANNEL_ID = "run";
+    private static final String KEY_URL = "url";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Timber.d("From: " + remoteMessage.getFrom());
 
+        String urlPath = null;
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Timber.d("Message data payload: " + remoteMessage.getData());
+            String url = remoteMessage.getData().get(KEY_URL);
+            if (url != null) {
+                urlPath = Uri.parse(url).getPath();
+            }
         }
 
         // Check if message contains a notification payload.
@@ -40,7 +46,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 createNotificationChannel();
             }
-            sendNotification(remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getBody(), urlPath);
         }
     }
 
@@ -50,7 +56,8 @@ public class FcmMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         CharSequence channelName = "Run";
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, channelName, importance);
+        NotificationChannel notificationChannel = new NotificationChannel(
+                getString(R.string.notification_channel_id), channelName, importance);
         notificationChannel.enableLights(true);
         notificationChannel.setLightColor(Color.RED);
         notificationChannel.enableVibration(true);
@@ -63,18 +70,20 @@ public class FcmMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String messageBody, String urlPath) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(PostFragment.KEY_PATH, urlPath);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,
-                CHANNEL_ID)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+                this, getString(R.string.notification_channel_id))
                 .setSmallIcon(R.drawable.ic_directions_run_black_24dp)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
                         R.mipmap.ic_launcher_round))
+                .setColor(getResources().getColor(R.color.accent))
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(messageBody)
                 .setAutoCancel(true)
