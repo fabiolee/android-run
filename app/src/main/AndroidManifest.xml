@@ -1,2 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.blogspot.carirunners.run.app" />
+    package="com.blogspot.carirunners.run.app"
+    android:targetSandboxVersion="2" />
