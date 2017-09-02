@@ -14,7 +14,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
 import com.blogspot.carirunners.run.MainActivity;
-import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -24,20 +23,15 @@ import timber.log.Timber;
  * @author fabiolee
  */
 public class FcmMessagingService extends FirebaseMessagingService {
-    private static final String KEY_URL = "url";
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Timber.d("From: " + remoteMessage.getFrom());
 
-        String urlPath = null;
+        String url = null;
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Timber.d("Message data payload: " + remoteMessage.getData());
-            String url = remoteMessage.getData().get(KEY_URL);
-            if (url != null) {
-                urlPath = Uri.parse(url).getPath();
-            }
+            url = remoteMessage.getData().get(MainActivity.KEY_URL);
         }
 
         // Check if message contains a notification payload.
@@ -46,7 +40,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 createNotificationChannel();
             }
-            sendNotification(remoteMessage.getNotification().getBody(), urlPath);
+            sendNotification(remoteMessage.getNotification().getBody(), url);
         }
     }
 
@@ -70,10 +64,10 @@ public class FcmMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody, String urlPath) {
+    private void sendNotification(String messageBody, String url) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(PostFragment.KEY_PATH, urlPath);
+        intent.putExtra(MainActivity.KEY_URL, url);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

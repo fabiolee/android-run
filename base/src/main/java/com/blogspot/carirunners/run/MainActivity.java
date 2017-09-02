@@ -1,7 +1,6 @@
 package com.blogspot.carirunners.run;
 
 import com.blogspot.carirunners.run.ui.common.NavigationController;
-import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.google.android.instantapps.InstantApps;
 
 import android.arch.lifecycle.LifecycleRegistry;
@@ -26,6 +25,8 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends AppCompatActivity implements LifecycleRegistryOwner,
         HasSupportFragmentInjector {
+    public static final String KEY_URL = "url";
+
     private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
@@ -78,7 +79,8 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        //parseIntent(intent);
+        setIntent(intent);
+        parseIntent(intent);
     }
 
     @Override
@@ -87,7 +89,11 @@ public class MainActivity extends AppCompatActivity implements LifecycleRegistry
     }
 
     private void parseIntent(Intent intent) {
-        String urlPath = intent.getStringExtra(PostFragment.KEY_PATH);
+        String url = intent.getStringExtra(KEY_URL);
+        String urlPath = null;
+        if (url != null) {
+            urlPath = Uri.parse(url).getPath();
+        }
         if (urlPath != null) {
             navigationController.navigateToPost(null, urlPath);
         }

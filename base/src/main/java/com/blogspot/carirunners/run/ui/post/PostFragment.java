@@ -33,8 +33,8 @@ import javax.inject.Inject;
  */
 public class PostFragment extends Fragment implements LifecycleRegistryOwner, Injectable {
 
-    public static final String KEY_ID = "id";
-    public static final String KEY_PATH = "path";
+    private static final String KEY_ID = "id";
+    private static final String KEY_PATH = "path";
 
     private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
 
