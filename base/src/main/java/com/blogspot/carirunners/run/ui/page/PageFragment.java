@@ -6,6 +6,7 @@ import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.PageFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
+import com.blogspot.carirunners.run.ui.post.PostActivity;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 import com.blogspot.carirunners.run.vo.PageItem;
 
@@ -62,8 +63,9 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PageViewModel.class);
         viewModel.setId(BloggerService.PAGE_ID);
 
-        PageItemAdapter adapter = new PageItemAdapter(dataBindingComponent,
-                pageItem -> navigationController.navigateToPost(null, pageItem.urlPath));
+        PageItemAdapter adapter = new PageItemAdapter(dataBindingComponent, pageItem ->
+                startActivity(PostActivity.getStartIntent(getContext(), null,
+                        pageItem.urlPath)));
         this.adapter = new AutoClearedValue<>(this, adapter);
         binding.get().pageItemList.setAdapter(adapter);
 

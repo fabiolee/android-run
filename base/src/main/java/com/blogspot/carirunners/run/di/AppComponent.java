@@ -12,15 +12,18 @@ import dagger.android.AndroidInjectionModule;
 
 @Singleton
 @Component(modules = {
+        ActivityBindingModule.class,
         AndroidInjectionModule.class,
-        AppModule.class,
-        MainActivityModule.class
+        AppModule.class
 })
 public interface AppComponent {
     @Component.Builder
     interface Builder {
-        @BindsInstance Builder application(Application application);
+        @BindsInstance
+        Builder application(Application application);
+
         AppComponent build();
     }
+
     void inject(AppApplication application);
 }

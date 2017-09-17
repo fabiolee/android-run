@@ -36,6 +36,15 @@
                 android:name="default-url"
                 android:value="https://carirunners-57b89.firebaseapp.com" />
         </activity>
+        <activity
+            android:name=".ui.post.PostActivity"
+            android:icon="@drawable/ic_home_white_24dp"
+            android:parentActivityName=".MainActivity">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".testing.SingleFragmentActivity"></activity>
     </application>
 

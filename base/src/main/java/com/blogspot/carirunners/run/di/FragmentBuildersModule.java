@@ -1,24 +1,31 @@
 package com.blogspot.carirunners.run.di;
 
+import android.support.v7.app.AppCompatActivity;
+
+import com.blogspot.carirunners.run.MainActivity;
 import com.blogspot.carirunners.run.ui.page.PageFragment;
-import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
 public abstract class FragmentBuildersModule {
+    @FragmentScoped
     @ContributesAndroidInjector
-    abstract PageFragment contributePageFragment();
+    abstract PageFragment pageFragment();
 
+    @FragmentScoped
     @ContributesAndroidInjector
-    abstract PostFragment contributePostFragment();
+    abstract UserFragment userFragment();
 
+    @FragmentScoped
     @ContributesAndroidInjector
-    abstract UserFragment contributeUserFragment();
+    abstract SearchFragment searchFragment();
 
-    @ContributesAndroidInjector
-    abstract SearchFragment contributeSearchFragment();
+    @ActivityScoped
+    @Binds
+    abstract AppCompatActivity activity(MainActivity activity);
 }

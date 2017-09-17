@@ -33,9 +33,6 @@ import javax.inject.Inject;
  */
 public class PostFragment extends Fragment implements LifecycleRegistryOwner, Injectable {
 
-    private static final String KEY_ID = "id";
-    private static final String KEY_PATH = "path";
-
     private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
 
     @Inject
@@ -52,8 +49,8 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
     public static PostFragment newInstance(String id, String path) {
         PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
-        args.putString(KEY_ID, id);
-        args.putString(KEY_PATH, path);
+        args.putString(PostActivity.ID, id);
+        args.putString(PostActivity.PATH, path);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,8 +68,8 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
         String id = null;
         String path = null;
         if (args != null) {
-            id = args.getString(KEY_ID);
-            path = args.getString(KEY_PATH);
+            id = args.getString(PostActivity.ID);
+            path = args.getString(PostActivity.PATH);
         }
         viewModel.setId(id, path);
         viewModel.getPost().observe(this, resource -> {

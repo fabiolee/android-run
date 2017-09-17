@@ -1,6 +1,5 @@
 package com.blogspot.carirunners.run.ui.common;
 
-import com.blogspot.carirunners.run.MainActivity;
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.ui.page.PageFragment;
 import com.blogspot.carirunners.run.ui.post.PostFragment;
@@ -8,20 +7,21 @@ import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
 /**
- * A utility class that handles navigation in {@link MainActivity}.
+ * A utility class that handles navigation in {@link AppCompatActivity}.
  */
 public class NavigationController {
     private final int containerId;
     private final FragmentManager fragmentManager;
 
     @Inject
-    public NavigationController(MainActivity mainActivity) {
+    public NavigationController(AppCompatActivity activity) {
         this.containerId = R.id.container;
-        this.fragmentManager = mainActivity.getSupportFragmentManager();
+        this.fragmentManager = activity.getSupportFragmentManager();
     }
 
     public void navigateToSearch() {
@@ -32,20 +32,24 @@ public class NavigationController {
     }
 
     public void navigateToPage() {
-        String tag = "page";
-        PageFragment fragment = new PageFragment();
+        String tag = "PageFragment";
+        PageFragment fragment = (PageFragment) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new PageFragment();
+        }
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment, tag)
-                //.addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
     public void navigateToPost(String id, String path) {
-        PostFragment fragment = PostFragment.newInstance(id, path);
-        String tag = "post" + "/" + id + "/path/" + path;
+        String tag = "PostFragment";
+        PostFragment fragment = (PostFragment) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = PostFragment.newInstance(id, path);
+        }
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment, tag)
-                .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
