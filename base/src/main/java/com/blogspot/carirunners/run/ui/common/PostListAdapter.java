@@ -27,7 +27,7 @@ public class PostListAdapter extends DataBoundListAdapter<Post, PostItemBinding>
     }
 
     @Override
-    protected PostItemBinding createBinding(ViewGroup parent) {
+    protected PostItemBinding createBinding(ViewGroup parent, int viewType) {
         PostItemBinding binding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()), R.layout.post_item,
                         parent, false, dataBindingComponent);
@@ -42,7 +42,7 @@ public class PostListAdapter extends DataBoundListAdapter<Post, PostItemBinding>
     }
 
     @Override
-    protected void bind(PostItemBinding binding, Post item) {
+    protected void bind(PostItemBinding binding, Post item, int viewType) {
         binding.setPost(item);
     }
 

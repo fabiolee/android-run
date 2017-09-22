@@ -8,6 +8,7 @@ import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.ui.post.PostActivity;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
+import com.blogspot.carirunners.run.vo.Page;
 import com.blogspot.carirunners.run.vo.PageItem;
 
 import android.arch.lifecycle.LifecycleRegistry;
@@ -20,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,8 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
                 startActivity(PostActivity.getStartIntent(getContext(), null,
                         pageItem.urlPath)));
         this.adapter = new AutoClearedValue<>(this, adapter);
+        binding.get().pageItemList.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         binding.get().pageItemList.setAdapter(adapter);
 
         initView(viewModel);
@@ -85,7 +89,6 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
 
     private void initView(PageViewModel viewModel) {
         viewModel.getPage().observe(this, resource -> {
-            binding.get().setPage(resource == null ? null : resource.data);
             binding.get().setPageResource(resource);
             binding.get().executePendingBindings();
             if (resource == null || resource.data == null) {
@@ -94,6 +97,8 @@ public class PageFragment extends Fragment implements LifecycleRegistryOwner, In
                 Document document = Jsoup.parseBodyFragment(resource.data.content);
                 Elements elements = document.select("ul li");
                 List<PageItem> pageItems = new ArrayList<>();
+                Page page = resource.data;
+                pageItems.add(new PageItem(page.title, null));
                 String title;
                 String urlPath;
                 for (Element element : elements) {

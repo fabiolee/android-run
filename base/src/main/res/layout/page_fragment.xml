@@ -5,9 +5,6 @@
     <data>
         <import type="com.blogspot.carirunners.run.vo.Resource"/>
         <variable
-            name="page"
-            type="com.blogspot.carirunners.run.vo.Page"/>
-        <variable
             name="pageResource"
             type="Resource"/>
         <variable name="retryCallback"
@@ -17,35 +14,16 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:visibleGone="@{page != null}"
-            android:text="@{page.title}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Page Title"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/page_item_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:listitem="@layout/page_item"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/page_content_item"/>
         <include layout="@layout/loading_state"
              app:resource="@{pageResource}"
              app:callback="@{() -> retryCallback.retry()}"
