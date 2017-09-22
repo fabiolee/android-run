@@ -9,17 +9,13 @@ This is a mobile app that uses Android Architecture Components with Dagger 2.
 https://carirunners-57b89.firebaseapp.com
 
 ## Functionality
-The app is composed of 4 main screens.
-### SearchFragment
-Allows you to search posts on Blogger.
+The app is composed of 2 main screens.
 ### PageFragment
 This fragment displays a page.
 ![PageFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PageFragment.png)
 ### PostFragment
 This fragment displays the details of a post.
 ![PostFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PostFragment.png)
-### UserFragment
-This fragment displays a user and their repositories.
 
 ## Building
 You can open the project in Android studio and press run.
