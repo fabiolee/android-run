@@ -16,6 +16,9 @@ This fragment displays a page.
 ### PostFragment
 This fragment displays the details of a post.
 ![PostFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PostFragment.png)
+### PushNotification
+The FCM push notification.
+![PushNotification](https://raw.githubusercontent.com/fabiolee/run/master/art/PushNotification.png)
 
 ## Building
 You can open the project in Android studio and press run.
