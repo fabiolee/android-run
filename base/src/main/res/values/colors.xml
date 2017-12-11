@@ -10,6 +10,7 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
     <!-- Color -->
+    <color name="blue">#0094DA</color>
     <color name="orange">#FF9800</color>
     <color name="red">#F44336</color>
     <color name="yellow">#FFEB3B</color>
