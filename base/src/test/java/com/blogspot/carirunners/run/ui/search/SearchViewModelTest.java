@@ -7,7 +7,6 @@ import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.Resource;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

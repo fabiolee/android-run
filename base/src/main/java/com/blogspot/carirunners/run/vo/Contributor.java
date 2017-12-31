@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.support.annotation.NonNull;
 
 @Entity(primaryKeys = {"repoName", "repoOwner", "login"},
         foreignKeys = @ForeignKey(entity = Repo.class,
@@ -13,6 +14,7 @@ import android.arch.persistence.room.ForeignKey;
                 deferred = true))
 public class Contributor {
 
+    @NonNull
     @SerializedName("login")
     private final String login;
 
@@ -22,8 +24,10 @@ public class Contributor {
     @SerializedName("avatar_url")
     private final String avatarUrl;
 
+    @NonNull
     private String repoName;
 
+    @NonNull
     private String repoOwner;
 
     public Contributor(String login, int contributions, String avatarUrl) {

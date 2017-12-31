@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run.vo;
 
 import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
 
 /**
  * Using id as primary key.
@@ -8,6 +9,7 @@ import android.arch.persistence.room.Entity;
 @Entity(primaryKeys = "id")
 public class Page {
     public static final String UNKNOWN_ID = "-1";
+    @NonNull
     public final String id;
     public final String published;
     public final String updated;

@@ -20,6 +20,13 @@ This fragment displays the details of a post.
 The FCM push notification.
 ![PushNotification](https://raw.githubusercontent.com/fabiolee/run/master/art/PushNotification.png)
 
+## Setup
+Create a `base/fabric.properties` file and include your own Fabric `apiKey` and `apiSecret`.
+Example:
+```
+apiKey=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+apiSecret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 ## Building
 You can open the project in Android studio and press run.
 ## Testing
@@ -59,6 +66,7 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 * [Logging Interceptor][logging-interceptor] for logging REST api
 * [Glide][glide] for image loading
 * [jsoup][jsoup] for Java HTML parser
+* [Crashlytics][crashlytics] for crash reporting
 * [Stetho][stetho] for debug bridge
 * [Timber][timber] for logging
 * [espresso][espresso] for UI tests
@@ -76,6 +84,7 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 [logging-interceptor]: https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
 [glide]: https://github.com/bumptech/glide
 [jsoup]: https://jsoup.org
+[crashlytics]: https://fabric.io
 [stetho]: https://github.com/facebook/stetho
 [timber]: https://github.com/JakeWharton/timber
 [mockito]: http://site.mockito.org

@@ -2,6 +2,7 @@ package com.blogspot.carirunners.run.vo;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
 import com.blogspot.carirunners.run.db.BloggerTypeConverters;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @TypeConverters(BloggerTypeConverters.class)
 public class Post {
     public static final String UNKNOWN_ID = "-1";
+    @NonNull
     public final String id;
     public final String published;
     public final String updated;

@@ -1,7 +1,5 @@
 package com.blogspot.carirunners.run.api;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -9,8 +7,6 @@ import org.junit.runners.JUnit4;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

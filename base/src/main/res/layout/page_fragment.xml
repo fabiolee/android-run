@@ -3,10 +3,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <import type="com.blogspot.carirunners.run.vo.Resource"/>
         <variable
             name="pageResource"
-            type="Resource"/>
+            type="com.blogspot.carirunners.run.vo.Resource"/>
         <variable name="retryCallback"
                   type="com.blogspot.carirunners.run.ui.common.RetryCallback"/>
     </data>

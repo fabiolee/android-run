@@ -1,6 +1,5 @@
 package com.blogspot.carirunners.run.repository;
 
-import com.blogspot.carirunners.run.AppExecutors;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.db.UserDao;

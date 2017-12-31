@@ -2,9 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.blogspot.carirunners.run.vo.Resource"/>
         <import type="com.blogspot.carirunners.run.vo.Status"/>
-        <variable name="resource" type="Resource"/>
+        <variable name="resource" type="com.blogspot.carirunners.run.vo.Resource"/>
         <variable name="callback" type="com.blogspot.carirunners.run.ui.common.RetryCallback"/>
     </data>
     <LinearLayout android:orientation="vertical"

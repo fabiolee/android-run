@@ -1,11 +1,13 @@
 package com.blogspot.carirunners.run.vo;
 
 import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 @Entity(primaryKeys = "login")
 public class User {
+    @NonNull
     @SerializedName("login")
     public final String login;
     @SerializedName("avatar_url")

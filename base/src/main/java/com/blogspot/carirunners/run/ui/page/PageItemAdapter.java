@@ -5,7 +5,6 @@ import com.blogspot.carirunners.run.databinding.PageContentItemBinding;
 import com.blogspot.carirunners.run.databinding.PageTitleItemBinding;
 import com.blogspot.carirunners.run.ui.common.DataBoundListAdapter;
 import com.blogspot.carirunners.run.util.Objects;
-import com.blogspot.carirunners.run.vo.Page;
 import com.blogspot.carirunners.run.vo.PageItem;
 
 import android.databinding.DataBindingComponent;

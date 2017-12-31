@@ -6,7 +6,6 @@
         <import type="com.blogspot.carirunners.run.vo.Post" />
         <import type="java.util.List" />
         <import type="com.blogspot.carirunners.run.vo.Status" />
-        <import type="com.blogspot.carirunners.run.vo.Resource" />
         <variable
             name="resultCount"
             type="int" />
@@ -18,7 +17,7 @@
             type="boolean" />
         <variable
             name="searchResource"
-            type="Resource" />
+            type="com.blogspot.carirunners.run.vo.Resource" />
         <variable
             name="callback"
             type="com.blogspot.carirunners.run.ui.common.RetryCallback" />
