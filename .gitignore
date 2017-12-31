@@ -17,6 +17,9 @@ out/
 .gradle/
 build/
 
+# Fabric
+base/fabric.properties
+
 # Local configuration file (sdk path, etc)
 local.properties
 
