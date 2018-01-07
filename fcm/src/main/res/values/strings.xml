@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
+    "com.crashlytics.android.build_id" will be removed in feature module after
+    https://stackoverflow.com/a/44361851 issue fixed.
+    -->
+    <string name="com.crashlytics.android.build_id" translatable="false">edf2df64-c2ca-4693-bab0-f3f24c02f3f6</string>
     <string name="notification_channel_id">run</string>
 </resources>

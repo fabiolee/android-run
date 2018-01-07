@@ -4,6 +4,7 @@ import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.ui.page.PageFragment;
 import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
+import com.blogspot.carirunners.run.ui.settings.SettingsFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
 
 import android.support.v4.app.FragmentManager;
@@ -47,6 +48,17 @@ public class NavigationController {
         PostFragment fragment = (PostFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
             fragment = PostFragment.newInstance(id, path);
+        }
+        fragmentManager.beginTransaction()
+                .replace(containerId, fragment, tag)
+                .commitAllowingStateLoss();
+    }
+
+    public void navigateToSettings() {
+        String tag = "SettingsFragment";
+        SettingsFragment fragment = (SettingsFragment) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new SettingsFragment();
         }
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment, tag)

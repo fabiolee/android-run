@@ -3,6 +3,7 @@ package com.blogspot.carirunners.run;
 import com.blogspot.carirunners.run.di.AppInjector;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
+import com.google.android.instantapps.InstantApps;
 
 import android.app.Activity;
 import android.support.multidex.MultiDexApplication;
@@ -24,6 +25,7 @@ public class AppApplication extends MultiDexApplication implements HasActivityIn
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        Crashlytics.setBool("InstantApp", InstantApps.isInstantApp(this));
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this);
             Timber.plant(new Timber.DebugTree());
