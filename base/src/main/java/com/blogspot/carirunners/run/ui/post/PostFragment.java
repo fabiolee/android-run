@@ -8,6 +8,7 @@ import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.PostContent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
@@ -26,6 +27,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 /**
@@ -38,6 +41,7 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
+    private FirebaseAnalytics analytics;
     private PostViewModel viewModel;
 
     @Inject
@@ -58,6 +62,12 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
     @Override
     public LifecycleRegistry getLifecycle() {
         return lifecycleRegistry;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        analytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -87,6 +97,11 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
                 firstElement.remove();
                 String htmlContent = document.body().html();
                 postContent = new PostContent(logoUrl, htmlContent);
+
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList(FirebaseAnalytics.Param.ITEM_CATEGORY,
+                        (ArrayList<String>) post.labels);
+                analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
             }
             binding.get().setPost(post);
             binding.get().setPostContent(postContent);

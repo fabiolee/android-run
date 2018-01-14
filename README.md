@@ -60,6 +60,8 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 * [Android Support Library][support-lib]
 * [Android Architecture Components][arch]
 * [Android Data Binding][data-binding]
+* [Firebase Cloud Messaging][fcm]
+* [Google Analytics for Firebase][firebase-analytics]
 * [Google Play Services][google-services]
 * [Dagger 2][dagger2] for dependency injection
 * [Retrofit][retrofit] for REST api communication
@@ -77,6 +79,8 @@ The project uses [MockWebServer][mockwebserver] project to test REST api interac
 [support-lib]: https://developer.android.com/topic/libraries/support-library/index.html
 [arch]: https://developer.android.com/arch
 [data-binding]: https://developer.android.com/topic/libraries/data-binding/index.html
+[fcm]: https://firebase.google.com/docs/cloud-messaging/
+[firebase-analytics]: https://firebase.google.com/docs/analytics/
 [google-services]: https://developer.android.com/google/index.html
 [espresso]: https://google.github.io/android-testing-support-library/docs/espresso/
 [dagger2]: https://google.github.io/dagger
