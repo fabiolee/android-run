@@ -21,7 +21,7 @@ android:
     - sys-img-armeabi-v7a-android-27
 
 script:
-  - ./gradlew clean :app:assemble :instantapp:assemble test
+  - ./gradlew clean :app:assemble :instantapp:assemble
 
 branches:
   only:

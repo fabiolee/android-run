@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.ui.common.BaseActivity;
@@ -33,6 +34,8 @@ public class PostActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_activity);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
         ab.setDisplayHomeAsUpEnabled(true);

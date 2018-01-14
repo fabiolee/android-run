@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <FrameLayout
@@ -63,16 +63,19 @@
                         app:visibleGone="@{postContent != null}"/>
                 </android.support.constraint.ConstraintLayout>
             </FrameLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
         <include layout="@layout/loading_state"
             app:resource="@{postResource}"
             app:callback="@{() -> retryCallback.retry()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="?android:attr/actionBarSize"
+            android:layout_marginTop="0dp"
             app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

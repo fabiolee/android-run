@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -32,10 +34,15 @@ public class BaseActivity extends DaggerAppCompatActivity implements LifecycleRe
     public boolean onCreateOptionsMenu(Menu menu) {
         if (InstantApps.isInstantApp(this)) {
             getMenuInflater().inflate(R.menu.install_menu, menu);
-            Drawable drawable = menu.findItem(R.id.action_install).getIcon();
+            MenuItem installMenu = menu.findItem(R.id.action_install);
+            int iconsColor = ContextCompat.getColor(this, R.color.icons);
+            SpannableString installTitle = new SpannableString(installMenu.getTitle());
+            installTitle.setSpan(new ForegroundColorSpan(iconsColor), 0, installTitle.length(), 0);
+            installMenu.setTitle(installTitle);
+            Drawable drawable = installMenu.getIcon();
             drawable = DrawableCompat.wrap(drawable);
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.icons));
-            menu.findItem(R.id.action_install).setIcon(drawable);
+            DrawableCompat.setTint(drawable, iconsColor);
+            installMenu.setIcon(drawable);
         }
         return true;
     }
