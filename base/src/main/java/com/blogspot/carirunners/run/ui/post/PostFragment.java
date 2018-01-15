@@ -27,8 +27,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 /**
@@ -99,8 +97,14 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
                 postContent = new PostContent(logoUrl, htmlContent);
 
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList(FirebaseAnalytics.Param.ITEM_CATEGORY,
-                        (ArrayList<String>) post.labels);
+                if (post.labels != null) {
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY,
+                            String.valueOf(post.labels));
+                    int count = 0;
+                    for (String label : post.labels) {
+                        bundle.putString("item_label_" + ++count, label);
+                    }
+                }
                 analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
             }
             binding.get().setPost(post);
