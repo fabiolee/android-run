@@ -1,6 +1,7 @@
 # Built application files
 *.apk
 *.ap_
+*.zip
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -16,6 +17,7 @@ out/
 # Gradle files
 .gradle/
 build/
+release/
 
 # Fabric
 base/fabric.properties
