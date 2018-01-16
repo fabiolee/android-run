@@ -27,6 +27,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -96,8 +99,37 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
                 String htmlContent = document.body().html();
                 postContent = new PostContent(logoUrl, htmlContent);
 
+                String eventName = FirebaseAnalytics.Event.VIEW_ITEM;
                 Bundle bundle = new Bundle();
                 if (post.labels != null) {
+                    List<String> northernList = Arrays.asList(getResources()
+                            .getStringArray(R.array.northern));
+                    List<String> eastCoastList = Arrays.asList(getResources()
+                            .getStringArray(R.array.eastcoast));
+                    List<String> centralList = Arrays.asList(getResources()
+                            .getStringArray(R.array.central));
+                    List<String> southernList = Arrays.asList(getResources()
+                            .getStringArray(R.array.southern));
+                    List<String> eastMalaysiaList = Arrays.asList(getResources()
+                            .getStringArray(R.array.eastmalaysia));
+                    for (String label : post.labels) {
+                        if (northernList.contains(label)) {
+                            eventName += "_northern";
+                            break;
+                        } else if (eastCoastList.contains(label)) {
+                            eventName += "_eastcoast";
+                            break;
+                        } else if (centralList.contains(label)) {
+                            eventName += "_central";
+                            break;
+                        } else if (southernList.contains(label)) {
+                            eventName += "_southern";
+                            break;
+                        } else if (eastMalaysiaList.contains(label)) {
+                            eventName += "_eastmalaysia";
+                            break;
+                        }
+                    }
                     bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY,
                             String.valueOf(post.labels));
                     int count = 0;
@@ -105,7 +137,7 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
                         bundle.putString("item_label_" + ++count, label);
                     }
                 }
-                analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+                analytics.logEvent(eventName, bundle);
             }
             binding.get().setPost(post);
             binding.get().setPostContent(postContent);

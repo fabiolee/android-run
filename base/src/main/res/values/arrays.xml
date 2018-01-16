@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="northern">
+        <item>perlis</item>
+        <item>kedah</item>
+        <item>penang</item>
+        <item>perak</item>
+    </string-array>
+    <string-array name="eastcoast">
+        <item>kelantan</item>
+        <item>terengganu</item>
+        <item>pahang</item>
+    </string-array>
+    <string-array name="central">
+        <item>selangor</item>
+        <item>kuala lumpur</item>
+        <item>putrajaya</item>
+    </string-array>
+    <string-array name="southern">
+        <item>negeri sembilan</item>
+        <item>melaka</item>
+        <item>johor</item>
+    </string-array>
+    <string-array name="eastmalaysia">
+        <item>sarawak</item>
+        <item>sabah</item>
+        <item>labuan</item>
+    </string-array>
+</resources>
