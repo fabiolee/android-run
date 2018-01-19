@@ -27,6 +27,14 @@ Example:
 apiKey=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 apiSecret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+Create a `cert/keystore.properties` file and include your own keystore `storeFile`, `storePassword`, `keyAlias` and `keyPassword`.
+Example:
+```
+storeFile=../cert/keystore.jks
+storePassword=xxxxxxxx
+keyAlias=xxxxxxxx
+keyPassword=xxxxxxxx
+```
 ## Building
 You can open the project in Android studio and press run.
 ## Testing

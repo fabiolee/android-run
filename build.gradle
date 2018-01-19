@@ -15,7 +15,7 @@ ext {
     compileSdkVersion = 27
     buildToolsVersion = "27.0.2"
     minSdkVersion = 14
-    versionCode = 10
+    versionCode = 11
     versionName = "1.0.8"
 
     androidArchVersion = "1.0.0"

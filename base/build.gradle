@@ -1,6 +1,11 @@
 apply plugin: 'com.android.feature'
 apply plugin: 'io.fabric'
 apply plugin: 'jacoco'
+
+def keystorePropertiesFile = rootProject.file("cert/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -12,13 +17,22 @@ android {
         multiDexEnabled = true
         testInstrumentationRunner "com.blogspot.carirunners.run.util.AppTestRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     buildTypes {
         debug {
             testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     dataBinding {
