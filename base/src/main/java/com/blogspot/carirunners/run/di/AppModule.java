@@ -7,6 +7,7 @@ import com.blogspot.carirunners.run.BuildConfig;
 import com.blogspot.carirunners.run.api.BloggerService;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.db.AppDatabase;
+import com.blogspot.carirunners.run.db.FavoriteDao;
 import com.blogspot.carirunners.run.db.PageDao;
 import com.blogspot.carirunners.run.db.PostDao;
 import com.blogspot.carirunners.run.db.RepoDao;
@@ -63,6 +64,12 @@ class AppModule {
         return Room.databaseBuilder(app, AppDatabase.class, "app.db")
                 .fallbackToDestructiveMigration()
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    FavoriteDao provideFavoriteDao(AppDatabase db) {
+        return db.favoriteDao();
     }
 
     @Singleton

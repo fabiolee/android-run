@@ -62,10 +62,10 @@ jacoco {
 
 dependencies {
     application project(':app')
-    implementation "android.arch.lifecycle:common-java8:$androidArchVersion"
-    implementation "android.arch.lifecycle:extensions:$androidArchVersion"
-    implementation "android.arch.lifecycle:runtime:$androidArchVersion"
-    implementation "android.arch.persistence.room:runtime:$androidArchVersion"
+    implementation "android.arch.lifecycle:common-java8:$android_arch_version"
+    implementation "android.arch.lifecycle:extensions:$android_arch_version"
+    implementation "android.arch.lifecycle:runtime:$android_arch_version"
+    implementation "android.arch.persistence.room:runtime:$android_arch_version"
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
     api "com.android.support:cardview-v7:$androidSupportVersion"
     api "com.android.support:design:$androidSupportVersion"
@@ -88,33 +88,33 @@ dependencies {
     api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     api "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jsoup:jsoup:$jsoupVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$androidArchVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$androidArchVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$android_arch_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$android_arch_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
-    testCompile("android.arch.core:core-testing:$androidArchVersion", {
+    testImplementation("android.arch.core:core-testing:$android_arch_version", {
         exclude group: 'com.android.support', module: 'support-compat'
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-core-utils'
     })
-    testCompile "junit:junit:$junit_version"
-    testCompile "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
 
-    androidTestCompile "android.arch.core:core-testing:$androidArchVersion"
-    androidTestCompile "com.android.support:appcompat-v7:$androidSupportVersion"
-    androidTestCompile "com.android.support:recyclerview-v7:$androidSupportVersion"
-    androidTestCompile "com.android.support:support-v4:$androidSupportVersion"
-    androidTestCompile "com.android.support:design:$androidSupportVersion"
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
+    androidTestImplementation "android.arch.core:core-testing:$android_arch_version"
+    androidTestImplementation "com.android.support:appcompat-v7:$androidSupportVersion"
+    androidTestImplementation "com.android.support:recyclerview-v7:$androidSupportVersion"
+    androidTestImplementation "com.android.support:support-v4:$androidSupportVersion"
+    androidTestImplementation "com.android.support:design:$androidSupportVersion"
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$espresso_version", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-    androidTestCompile "org.mockito:mockito-android:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 }
 
 task fullCoverageReport(type: JacocoReport) {

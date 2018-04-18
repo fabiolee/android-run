@@ -14,4 +14,6 @@
     <color name="orange">#FF9800</color>
     <color name="red">#F44336</color>
     <color name="yellow">#FFEB3B</color>
+    <!-- Custom -->
+    <color name="bottom_navigation_view_background_color">#F8F8F8</color>
 </resources>

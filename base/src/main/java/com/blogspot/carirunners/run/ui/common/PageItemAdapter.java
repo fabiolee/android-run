@@ -1,9 +1,8 @@
-package com.blogspot.carirunners.run.ui.page;
+package com.blogspot.carirunners.run.ui.common;
 
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.databinding.PageContentItemBinding;
 import com.blogspot.carirunners.run.databinding.PageTitleItemBinding;
-import com.blogspot.carirunners.run.ui.common.DataBoundListAdapter;
 import com.blogspot.carirunners.run.util.Objects;
 import com.blogspot.carirunners.run.vo.PageItem;
 
@@ -29,11 +28,7 @@ public class PageItemAdapter
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_TITLE;
-        } else {
-            return VIEW_TYPE_CONTENT;
-        }
+        return VIEW_TYPE_CONTENT;
     }
 
     @Override
@@ -64,13 +59,16 @@ public class PageItemAdapter
     }
 
     @Override
-    protected void bind(ViewDataBinding binding, PageItem item, int viewType) {
+    protected void bind(ViewDataBinding binding, int position, PageItem item, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_TITLE:
                 ((PageTitleItemBinding) binding).setPageItem(item);
                 break;
             case VIEW_TYPE_CONTENT:
-                ((PageContentItemBinding) binding).setPageItem(item);
+                PageContentItemBinding contentBinding = (PageContentItemBinding) binding;
+                contentBinding.setPageItem(item);
+                contentBinding.setPageItemCallback(callback);
+                contentBinding.setPosition(position);
                 break;
         }
     }
@@ -83,10 +81,19 @@ public class PageItemAdapter
     @Override
     protected boolean areContentsTheSame(PageItem oldItem, PageItem newItem) {
         return Objects.equals(oldItem.title, newItem.title)
-                && Objects.equals(oldItem.urlPath, newItem.urlPath);
+                && Objects.equals(oldItem.urlPath, newItem.urlPath)
+                && oldItem.favorite == newItem.favorite;
+    }
+
+    public void replaceFavorite(int position) {
+        PageItem item = getItem(position);
+        item.favorite = !item.favorite;
+        notifyItemChanged(position);
     }
 
     public interface Callback {
         void onClick(PageItem pageItem);
+
+        void onClickFavorite(int position, PageItem pageItem);
     }
 }

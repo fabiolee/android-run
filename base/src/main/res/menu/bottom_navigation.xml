@@ -8,6 +8,12 @@
         android:title="@string/lbl_home"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/lbl_favorites"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_settings"
         android:enabled="true"
         android:icon="@drawable/ic_settings_white_24dp"

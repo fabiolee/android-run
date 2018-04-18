@@ -3,6 +3,7 @@ package com.blogspot.carirunners.run.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.blogspot.carirunners.run.ui.favorite.FavoriteViewModel;
 import com.blogspot.carirunners.run.ui.page.PageViewModel;
 import com.blogspot.carirunners.run.ui.post.PostViewModel;
 import com.blogspot.carirunners.run.ui.search.SearchViewModel;
@@ -15,6 +16,11 @@ import dagger.multibindings.IntoMap;
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel.class)
+    abstract ViewModel bindFavoriteViewModel(FavoriteViewModel viewModel);
+
     @Binds
     @IntoMap
     @ViewModelKey(PageViewModel.class)

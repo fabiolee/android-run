@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run.ui.common;
 
 import com.blogspot.carirunners.run.R;
+import com.blogspot.carirunners.run.ui.favorite.FavoriteFragment;
 import com.blogspot.carirunners.run.ui.page.PageFragment;
 import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
@@ -29,6 +30,17 @@ public class NavigationController {
         SearchFragment searchFragment = new SearchFragment();
         fragmentManager.beginTransaction()
                 .replace(containerId, searchFragment)
+                .commitAllowingStateLoss();
+    }
+
+    public void navigateToFavorite() {
+        String tag = "FavoriteFragment";
+        FavoriteFragment fragment = (FavoriteFragment) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new FavoriteFragment();
+        }
+        fragmentManager.beginTransaction()
+                .replace(containerId, fragment, tag)
                 .commitAllowingStateLoss();
     }
 

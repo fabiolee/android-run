@@ -4,6 +4,10 @@
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="pageItem" type="com.blogspot.carirunners.run.vo.PageItem"/>
+        <variable
+            name="pageItemCallback"
+            type="com.blogspot.carirunners.run.ui.common.PageItemAdapter.Callback"/>
+        <variable name="position" type="Integer"/>
     </data>
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -11,12 +15,33 @@
         <TextView
             android:id="@+id/title"
             android:text="@{pageItem.title}"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="0dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="0dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/favorite"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="PageItem Title"/>
+        <ImageButton
+            android:id="@+id/favorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/lbl_favorites"
+            android:onClick="@{() -> pageItemCallback.onClickFavorite(position, pageItem)}"
+            android:src="@{pageItem.favorite ? @drawable/ic_favorite_black_24dp : @drawable/ic_favorite_border_black_24dp}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

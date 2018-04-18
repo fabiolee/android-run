@@ -44,6 +44,8 @@ public class MainActivity extends BaseActivity
         int itemId = item.getItemId();
         if (itemId == R.id.action_home) {
             navigationController.navigateToPage();
+        } else if (itemId == R.id.action_favorites) {
+            navigationController.navigateToFavorite();
         } else if (itemId == R.id.action_settings) {
             navigationController.navigateToSettings();
         }

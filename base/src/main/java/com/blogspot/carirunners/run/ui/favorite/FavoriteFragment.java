@@ -1,7 +1,6 @@
-package com.blogspot.carirunners.run.ui.page;
+package com.blogspot.carirunners.run.ui.favorite;
 
 import com.blogspot.carirunners.run.R;
-import com.blogspot.carirunners.run.api.BloggerService;
 import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.PageFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
@@ -17,6 +16,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -24,16 +24,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
- * The UI Controller for displaying a Blogger Page's information.
+ * The UI Controller for displaying a Blogger Favorite's information.
  */
-public class PageFragment extends Fragment implements Injectable {
+public class FavoriteFragment extends Fragment implements Injectable {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private PageViewModel viewModel;
+    private FavoriteViewModel viewModel;
 
     @Inject
     NavigationController navigationController;
@@ -45,8 +48,7 @@ public class PageFragment extends Fragment implements Injectable {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PageViewModel.class);
-        viewModel.setId(BloggerService.PAGE_ID);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FavoriteViewModel.class);
 
         PageItemAdapter adapter = new PageItemAdapter(dataBindingComponent,
                 new PageItemAdapter.Callback() {
@@ -60,7 +62,7 @@ public class PageFragment extends Fragment implements Injectable {
                     public void onClickFavorite(int position, PageItem pageItem) {
                         viewModel.toggleFavorite(pageItem.favorite,
                                 new Favorite(null, pageItem.title, pageItem.urlPath));
-                        PageFragment.this.adapter.get().replaceFavorite(position);
+                        FavoriteFragment.this.adapter.get().replaceFavorite(position);
                     }
                 });
         this.adapter = new AutoClearedValue<>(this, adapter);
@@ -73,7 +75,7 @@ public class PageFragment extends Fragment implements Injectable {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         PageFragmentBinding dataBinding = DataBindingUtil
                 .inflate(inflater, R.layout.page_fragment, container, false);
@@ -82,14 +84,19 @@ public class PageFragment extends Fragment implements Injectable {
         return dataBinding.getRoot();
     }
 
-    private void initView(PageViewModel viewModel) {
-        viewModel.getPageItemList().observe(this, resource -> {
+    private void initView(FavoriteViewModel viewModel) {
+        viewModel.getFavoriteList().observe(this, resource -> {
             binding.get().setPageResource(resource);
             binding.get().executePendingBindings();
             if (resource == null || resource.data == null) {
                 adapter.get().replace(null);
             } else {
-                adapter.get().replace(resource.data);
+                List<PageItem> pageItems = new ArrayList<>();
+                List<Favorite> favoriteList = resource.data;
+                for (Favorite favorite : favoriteList) {
+                    pageItems.add(new PageItem(favorite.title, favorite.path, true));
+                }
+                adapter.get().replace(pageItems);
             }
         });
     }

@@ -42,7 +42,7 @@ public class PostListAdapter extends DataBoundListAdapter<Post, PostItemBinding>
     }
 
     @Override
-    protected void bind(PostItemBinding binding, Post item, int viewType) {
+    protected void bind(PostItemBinding binding, int position, Post item, int viewType) {
         binding.setPost(item);
     }
 

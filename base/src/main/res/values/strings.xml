@@ -11,6 +11,7 @@
     <string name="empty_search_result">No results for <b>%s</b></string>
     <string name="a11y_contributor_avatar">contributor avatar</string>
     <string name="lbl_about">About</string>
+    <string name="lbl_favorites">Favorites</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_install">Install</string>
     <string name="lbl_settings">Settings</string>

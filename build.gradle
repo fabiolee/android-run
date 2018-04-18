@@ -1,11 +1,11 @@
 buildscript {
     repositories {
+        google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        maven { url 'https://maven.google.com' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.google.gms:google-services:3.1.1'
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -13,16 +13,16 @@ buildscript {
 
 ext {
     compileSdkVersion = 27
-    buildToolsVersion = "27.0.2"
+    buildToolsVersion = "27.0.3"
     minSdkVersion = 14
     versionCode = 11
     versionName = "1.0.8"
 
-    androidArchVersion = "1.0.0"
+    android_arch_version = "1.0.0"
     androidInstantAppsVersion = "1.1.0"
     androidSupportVersion = "27.0.2"
     androidMultidexVersion = "1.0.2"
-    fabric_crashlytics_version = "2.8.0"
+    fabric_crashlytics_version = "2.9.1"
     facebookStethoVersion = "1.5.0"
     googleServicesVersion = "11.8.0"
     jsoupVersion = "1.10.3"
@@ -41,9 +41,9 @@ ext {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 }
