@@ -53,7 +53,7 @@ public class PageFragment extends Fragment implements Injectable {
                     @Override
                     public void onClick(PageItem pageItem) {
                         startActivity(PostActivity.getStartIntent(getContext(), null,
-                                pageItem.urlPath));
+                                pageItem.title, pageItem.urlPath, pageItem.favorite));
                     }
 
                     @Override

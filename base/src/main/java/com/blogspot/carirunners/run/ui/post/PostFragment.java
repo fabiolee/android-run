@@ -6,20 +6,29 @@ import com.blogspot.carirunners.run.databinding.PostFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
+import com.blogspot.carirunners.run.vo.Favorite;
 import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.PostContent;
+import com.google.android.instantapps.InstantApps;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,15 +44,18 @@ import javax.inject.Inject;
 /**
  * The UI Controller for displaying a Blogger Post's information.
  */
-public class PostFragment extends Fragment implements LifecycleRegistryOwner, Injectable {
-
-    private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
-
+public class PostFragment extends Fragment implements Injectable {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     private FirebaseAnalytics analytics;
+    private PostActivity activity;
     private PostViewModel viewModel;
+
+    private boolean favorite;
+    private Favorite favoriteEntity;
+    private MenuItem favoriteMenu;
+    private int iconColor;
 
     @Inject
     NavigationController navigationController;
@@ -51,18 +63,21 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
     DataBindingComponent dataBindingComponent = new FragmentDataBindingComponent(this);
     AutoClearedValue<PostFragmentBinding> binding;
 
-    public static PostFragment newInstance(String id, String path) {
+    public static PostFragment newInstance(String id, String title, String path, boolean favorite) {
         PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
         args.putString(PostActivity.ID, id);
+        args.putString(PostActivity.TITLE, title);
         args.putString(PostActivity.PATH, path);
+        args.putBoolean(PostActivity.FAVORITE, favorite);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public LifecycleRegistry getLifecycle() {
-        return lifecycleRegistry;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (PostActivity) context;
     }
 
     @Override
@@ -77,10 +92,14 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PostViewModel.class);
         Bundle args = getArguments();
         String id = null;
+        String title = null;
         String path = null;
         if (args != null) {
             id = args.getString(PostActivity.ID);
+            title = args.getString(PostActivity.TITLE);
             path = args.getString(PostActivity.PATH);
+            favorite = args.getBoolean(PostActivity.FAVORITE);
+            favoriteEntity = new Favorite(id, title, path);
         }
         viewModel.setId(id, path);
         viewModel.getPost().observe(this, resource -> {
@@ -153,7 +172,56 @@ public class PostFragment extends Fragment implements LifecycleRegistryOwner, In
         PostFragmentBinding dataBinding = DataBindingUtil.inflate(inflater, R.layout.post_fragment,
                 container, false, dataBindingComponent);
         dataBinding.setRetryCallback(() -> viewModel.retry());
+
+        Toolbar toolbar = dataBinding.toolbar;
+        activity.setSupportActionBar(toolbar);
+        ActionBar ab = activity.getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
+        setHasOptionsMenu(true);
+
         binding = new AutoClearedValue<>(this, dataBinding);
         return dataBinding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.post_menu, menu);
+        favoriteMenu = menu.findItem(R.id.action_favorites);
+        iconColor = ContextCompat.getColor(getContext(), R.color.icons);
+        activity.setMenuItemTitleTint(favoriteMenu, iconColor);
+        updateFavoriteIcon(favorite);
+        if (InstantApps.isInstantApp(getContext())) {
+            MenuItem installMenu = menu.findItem(R.id.action_install);
+            activity.setMenuItemTint(installMenu, iconColor);
+        } else {
+            menu.removeItem(R.id.action_install);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_favorites) {
+            viewModel.toggleFavorite(favorite, favoriteEntity);
+            favorite = !favorite;
+            updateFavoriteIcon(favorite);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateFavoriteIcon(boolean favorite) {
+        Drawable drawable;
+        if (favorite) {
+            drawable = AppCompatResources.getDrawable(getContext(),
+                    R.drawable.ic_favorite_black_24dp);
+        } else {
+            drawable = AppCompatResources.getDrawable(getContext(),
+                    R.drawable.ic_favorite_border_black_24dp);
+        }
+        activity.setMenuItemIconTint(favoriteMenu, drawable, iconColor);
     }
 }

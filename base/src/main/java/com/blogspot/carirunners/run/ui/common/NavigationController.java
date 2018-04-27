@@ -55,11 +55,11 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
-    public void navigateToPost(String id, String path) {
+    public void navigateToPost(String id, String title, String path, boolean favorite) {
         String tag = "PostFragment";
         PostFragment fragment = (PostFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
-            fragment = PostFragment.newInstance(id, path);
+            fragment = PostFragment.newInstance(id, title, path, favorite);
         }
         fragmentManager.beginTransaction()
                 .replace(containerId, fragment, tag)

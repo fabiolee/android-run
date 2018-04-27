@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 
 import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.ui.common.BaseActivity;
@@ -18,32 +16,32 @@ import javax.inject.Inject;
  */
 public class PostActivity extends BaseActivity {
     public static final String ID = "id";
+    public static final String TITLE = "title";
     public static final String PATH = "path";
+    public static final String FAVORITE = "favorite";
 
     @Inject
     NavigationController navigationController;
 
-    public static Intent getStartIntent(Context context, String id, String path) {
+    public static Intent getStartIntent(Context context, String id, String title, String path,
+                                        boolean favorite) {
         return new Intent(context, PostActivity.class)
                 .putExtra(ID, id)
-                .putExtra(PATH, path);
+                .putExtra(TITLE, title)
+                .putExtra(PATH, path)
+                .putExtra(FAVORITE, favorite);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frame_activity);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setDisplayShowHomeEnabled(true);
+        setContentView(R.layout.post_activity);
 
         Intent intent = getIntent();
         String id = intent.getStringExtra(ID);
+        String title = intent.getStringExtra(TITLE);
         String path = intent.getStringExtra(PATH);
-        navigationController.navigateToPost(id, path);
+        boolean favorite = intent.getBooleanExtra(FAVORITE, false);
+        navigationController.navigateToPost(id, title, path, favorite);
     }
 }

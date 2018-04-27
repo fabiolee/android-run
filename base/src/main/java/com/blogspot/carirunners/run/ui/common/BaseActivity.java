@@ -36,13 +36,7 @@ public class BaseActivity extends DaggerAppCompatActivity implements LifecycleRe
             getMenuInflater().inflate(R.menu.install_menu, menu);
             MenuItem installMenu = menu.findItem(R.id.action_install);
             int iconsColor = ContextCompat.getColor(this, R.color.icons);
-            SpannableString installTitle = new SpannableString(installMenu.getTitle());
-            installTitle.setSpan(new ForegroundColorSpan(iconsColor), 0, installTitle.length(), 0);
-            installMenu.setTitle(installTitle);
-            Drawable drawable = installMenu.getIcon();
-            drawable = DrawableCompat.wrap(drawable);
-            DrawableCompat.setTint(drawable, iconsColor);
-            installMenu.setIcon(drawable);
+            setMenuItemTint(installMenu, iconsColor);
         }
         return true;
     }
@@ -62,5 +56,28 @@ public class BaseActivity extends DaggerAppCompatActivity implements LifecycleRe
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void setMenuItemTint(MenuItem item, int color) {
+        setMenuItemTitleTint(item, color);
+        setMenuItemIconTint(item, color);
+    }
+
+    public void setMenuItemIconTint(MenuItem item, int color) {
+        Drawable drawable = item.getIcon();
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, color);
+        item.setIcon(drawable);
+    }
+
+    public void setMenuItemIconTint(MenuItem item, Drawable drawable, int color) {
+        DrawableCompat.setTint(drawable, color);
+        item.setIcon(drawable);
+    }
+
+    public void setMenuItemTitleTint(MenuItem item, int color) {
+        SpannableString title = new SpannableString(item.getTitle());
+        title.setSpan(new ForegroundColorSpan(color), 0, title.length(), 0);
+        item.setTitle(title);
     }
 }

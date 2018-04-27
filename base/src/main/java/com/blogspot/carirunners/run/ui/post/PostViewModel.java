@@ -1,8 +1,10 @@
 package com.blogspot.carirunners.run.ui.post;
 
+import com.blogspot.carirunners.run.repository.FavoriteRepository;
 import com.blogspot.carirunners.run.repository.PostRepository;
 import com.blogspot.carirunners.run.util.AbsentLiveData;
 import com.blogspot.carirunners.run.util.Objects;
+import com.blogspot.carirunners.run.vo.Favorite;
 import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.Resource;
 
@@ -15,20 +17,22 @@ import android.support.annotation.VisibleForTesting;
 import javax.inject.Inject;
 
 public class PostViewModel extends ViewModel {
+    private final FavoriteRepository favoriteRepository;
     @VisibleForTesting
     final MutableLiveData<PostId> postId;
     private final LiveData<Resource<Post>> post;
 
     @Inject
-    public PostViewModel(PostRepository repository) {
+    public PostViewModel(FavoriteRepository favoriteRepository, PostRepository postRepository) {
+        this.favoriteRepository = favoriteRepository;
         this.postId = new MutableLiveData<>();
-        post = Transformations.switchMap(postId, input -> {
+        this.post = Transformations.switchMap(postId, input -> {
             if (input.isEmpty()) {
                 return AbsentLiveData.create();
             } else if (input.path != null) {
-                return repository.loadByPath(input.path);
+                return postRepository.loadByPath(input.path);
             } else {
-                return repository.load(input.id);
+                return postRepository.load(input.id);
             }
         });
     }
@@ -50,6 +54,14 @@ public class PostViewModel extends ViewModel {
             return;
         }
         postId.setValue(update);
+    }
+
+    void toggleFavorite(boolean isFavorited, Favorite favorite) {
+        if (isFavorited) {
+            favoriteRepository.deleteByPath(favorite.path);
+        } else {
+            favoriteRepository.insert(favorite);
+        }
     }
 
     @VisibleForTesting

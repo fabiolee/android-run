@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
+    public static final String KEY_TITLE = "title";
     public static final String KEY_URL = "url";
 
     @Inject
@@ -71,13 +72,14 @@ public class MainActivity extends BaseActivity
     }
 
     private void parseIntent(Intent intent) {
+        String title = intent.getStringExtra(KEY_TITLE);
         String url = intent.getStringExtra(KEY_URL);
         String urlPath = null;
         if (url != null) {
             urlPath = Uri.parse(url).getPath();
         }
-        if (urlPath != null) {
-            startActivity(PostActivity.getStartIntent(this, null, urlPath));
+        if ((title != null) && (urlPath != null)) {
+            startActivity(PostActivity.getStartIntent(this, null, title, urlPath, false));
         }
     }
 }
