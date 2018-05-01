@@ -1,9 +1,9 @@
-![feature-graphic](https://raw.githubusercontent.com/fabiolee/run/master/art/feature-graphic.png)
+![feature-graphic](art/feature-graphic.png)
 Cari Runners blog reader with Android Architecture Components
 
 This is a mobile app that uses Android Architecture Components with Dagger 2.
 
-[![Build Status](https://travis-ci.org/fabiolee/run.svg?branch=master)](https://travis-ci.org/fabiolee/run)
+[![Build Status](https://travis-ci.org/fabiolee/android-run.svg?branch=master)](https://travis-ci.org/fabiolee/android-run)
 
 ## App Links
 https://carirunners-57b89.firebaseapp.com
@@ -12,13 +12,13 @@ https://carirunners-57b89.firebaseapp.com
 The app is composed of 2 main screens.
 ### PageFragment
 This fragment displays a page.
-![PageFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PageFragment.png)
+![PageFragment](art/PageFragment.png)
 ### PostFragment
 This fragment displays the details of a post.
-![PostFragment](https://raw.githubusercontent.com/fabiolee/run/master/art/PostFragment.png)
+![PostFragment](art/PostFragment.png)
 ### PushNotification
 The FCM push notification.
-![PushNotification](https://raw.githubusercontent.com/fabiolee/run/master/art/PushNotification.png)
+![PushNotification](art/PushNotification.png)
 
 ## Setup
 Create a `base/fabric.properties` file and include your own Fabric `apiKey` and `apiSecret`.
