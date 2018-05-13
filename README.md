@@ -9,13 +9,19 @@ This is a mobile app that uses Android Architecture Components with Dagger 2.
 https://carirunners-57b89.firebaseapp.com
 
 ## Functionality
-The app is composed of 2 main screens.
+The app is composed of 4 main screens.
 ### PageFragment
-This fragment displays a page.
+This fragment displays a list of posts.
 ![PageFragment](art/PageFragment.png)
 ### PostFragment
 This fragment displays the details of a post.
 ![PostFragment](art/PostFragment.png)
+### FavoriteFragment
+This fragment displays a list of favorite posts.
+![FavoriteFragment](art/FavoriteFragment.png)
+### SettingsFragment
+This fragment displays the settings.
+![SettingsFragment](art/SettingsFragment.png)
 ### PushNotification
 The FCM push notification.
 ![PushNotification](art/PushNotification.png)
