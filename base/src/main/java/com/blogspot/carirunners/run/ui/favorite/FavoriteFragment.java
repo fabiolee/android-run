@@ -59,10 +59,9 @@ public class FavoriteFragment extends Fragment implements Injectable {
                     }
 
                     @Override
-                    public void onClickFavorite(int position, PageItem pageItem) {
+                    public void onClickFavorite(PageItem pageItem) {
                         viewModel.toggleFavorite(pageItem.favorite,
                                 new Favorite(null, pageItem.title, pageItem.urlPath));
-                        FavoriteFragment.this.adapter.get().replaceFavorite(position);
                     }
                 });
         this.adapter = new AutoClearedValue<>(this, adapter);

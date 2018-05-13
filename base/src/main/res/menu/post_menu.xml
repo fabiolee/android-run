@@ -6,9 +6,4 @@
         android:icon="@drawable/ic_favorite_border_black_24dp"
         android:title="@string/lbl_favorites"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_install"
-        android:icon="@drawable/ic_get_app_white_24dp"
-        android:title="@string/lbl_install"
-        app:showAsAction="ifRoom" />
 </menu>

@@ -7,7 +7,6 @@
         <variable
             name="pageItemCallback"
             type="com.blogspot.carirunners.run.ui.common.PageItemAdapter.Callback"/>
-        <variable name="position" type="Integer"/>
     </data>
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,7 +35,7 @@
             android:layout_margin="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/lbl_favorites"
-            android:onClick="@{() -> pageItemCallback.onClickFavorite(position, pageItem)}"
+            android:onClick="@{() -> pageItemCallback.onClickFavorite(pageItem)}"
             android:src="@{pageItem.favorite ? @drawable/ic_favorite_black_24dp : @drawable/ic_favorite_border_black_24dp}"
             android:tint="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"

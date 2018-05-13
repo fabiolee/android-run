@@ -9,7 +9,6 @@ import com.blogspot.carirunners.run.util.AutoClearedValue;
 import com.blogspot.carirunners.run.vo.Favorite;
 import com.blogspot.carirunners.run.vo.Post;
 import com.blogspot.carirunners.run.vo.PostContent;
-import com.google.android.instantapps.InstantApps;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import android.arch.lifecycle.ViewModelProvider;
@@ -176,7 +175,7 @@ public class PostFragment extends Fragment implements Injectable {
         Toolbar toolbar = dataBinding.toolbar;
         activity.setSupportActionBar(toolbar);
         ActionBar ab = activity.getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
         setHasOptionsMenu(true);
@@ -192,12 +191,6 @@ public class PostFragment extends Fragment implements Injectable {
         iconColor = ContextCompat.getColor(getContext(), R.color.icons);
         activity.setMenuItemTitleTint(favoriteMenu, iconColor);
         updateFavoriteIcon(favorite);
-        if (InstantApps.isInstantApp(getContext())) {
-            MenuItem installMenu = menu.findItem(R.id.action_install);
-            activity.setMenuItemTint(installMenu, iconColor);
-        } else {
-            menu.removeItem(R.id.action_install);
-        }
     }
 
     @Override

@@ -68,7 +68,6 @@ public class PageItemAdapter
                 PageContentItemBinding contentBinding = (PageContentItemBinding) binding;
                 contentBinding.setPageItem(item);
                 contentBinding.setPageItemCallback(callback);
-                contentBinding.setPosition(position);
                 break;
         }
     }
@@ -85,15 +84,9 @@ public class PageItemAdapter
                 && oldItem.favorite == newItem.favorite;
     }
 
-    public void replaceFavorite(int position) {
-        PageItem item = getItem(position);
-        item.favorite = !item.favorite;
-        notifyItemChanged(position);
-    }
-
     public interface Callback {
         void onClick(PageItem pageItem);
 
-        void onClickFavorite(int position, PageItem pageItem);
+        void onClickFavorite(PageItem pageItem);
     }
 }
