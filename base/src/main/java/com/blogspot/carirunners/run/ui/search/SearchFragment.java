@@ -8,7 +8,6 @@ import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.ui.common.PostListAdapter;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -18,6 +17,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +30,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import javax.inject.Inject;
 
-public class SearchFragment extends LifecycleFragment implements Injectable {
+public class SearchFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;

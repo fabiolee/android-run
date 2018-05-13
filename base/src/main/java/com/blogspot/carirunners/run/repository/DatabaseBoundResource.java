@@ -14,10 +14,10 @@ public abstract class DatabaseBoundResource<ResultType> {
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
 
     @MainThread
-    DatabaseBoundResource() {
+    DatabaseBoundResource(String emptyMsg) {
         result.setValue(Resource.loading(null));
         LiveData<ResultType> dbSource = loadFromDb();
-        result.addSource(dbSource, data -> result.setValue(Resource.success(data)));
+        result.addSource(dbSource, data -> result.setValue(Resource.success(emptyMsg, data)));
     }
 
     public LiveData<Resource<ResultType>> asLiveData() {

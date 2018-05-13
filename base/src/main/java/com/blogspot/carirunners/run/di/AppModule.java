@@ -2,6 +2,7 @@ package com.blogspot.carirunners.run.di;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 
 import com.blogspot.carirunners.run.BuildConfig;
 import com.blogspot.carirunners.run.api.BloggerService;
@@ -25,6 +26,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 class AppModule {
+    @Singleton
+    @Provides
+    Context provideContext(Application app) {
+        return app;
+    }
+
     @Singleton
     @Provides
     BloggerService provideBloggerService() {

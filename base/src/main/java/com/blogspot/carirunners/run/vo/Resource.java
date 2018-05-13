@@ -3,6 +3,8 @@ package com.blogspot.carirunners.run.vo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 import static com.blogspot.carirunners.run.vo.Status.ERROR;
 import static com.blogspot.carirunners.run.vo.Status.LOADING;
 import static com.blogspot.carirunners.run.vo.Status.SUCCESS;
@@ -29,8 +31,19 @@ public class Resource<T> {
         this.message = message;
     }
 
-    public static <T> Resource<T> success(@Nullable T data) {
-        return new Resource<>(SUCCESS, data, null);
+    public static <T> Resource<T> success(String msg, @Nullable T data) {
+        boolean isEmpty;
+        if (data instanceof List) {
+            List list = (List) data;
+            isEmpty = list.isEmpty();
+        } else {
+            isEmpty = data == null;
+        }
+        if (isEmpty) {
+            return new Resource<>(SUCCESS, null, msg);
+        } else {
+            return new Resource<>(SUCCESS, data, null);
+        }
     }
 
     public static <T> Resource<T> error(String msg, @Nullable T data) {

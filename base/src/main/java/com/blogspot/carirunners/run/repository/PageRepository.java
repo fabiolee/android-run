@@ -2,12 +2,14 @@ package com.blogspot.carirunners.run.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 
 import com.blogspot.carirunners.run.AppExecutors;
+import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.BloggerService;
 import com.blogspot.carirunners.run.db.FavoriteDao;
@@ -38,18 +40,20 @@ public class PageRepository {
     private final FavoriteDao favoriteDao;
     private final PageDao pageDao;
     private final BloggerService bloggerService;
+    private final String emptyMsg;
 
     @Inject
-    PageRepository(AppExecutors appExecutors, FavoriteDao favoriteDao, PageDao pageDao,
-                   BloggerService bloggerService) {
+    PageRepository(Context context, AppExecutors appExecutors, FavoriteDao favoriteDao,
+                   PageDao pageDao, BloggerService bloggerService) {
         this.appExecutors = appExecutors;
         this.favoriteDao = favoriteDao;
         this.pageDao = pageDao;
         this.bloggerService = bloggerService;
+        this.emptyMsg = context.getString(R.string.empty_message);
     }
 
     public LiveData<Resource<List<PageItem>>> load(String id) {
-        return new NetworkBoundResource<List<PageItem>, Page>(appExecutors) {
+        return new NetworkBoundResource<List<PageItem>, Page>(appExecutors, emptyMsg) {
             @Override
             protected void saveCallResult(@NonNull Page item) {
                 pageDao.insert(item);
@@ -90,12 +94,13 @@ public class PageRepository {
                                     favoriteMap.put(favorite.path, null);
                                 }
                             }
+                            List<PageItem> items = new ArrayList<>(pageItems.size());
+                            boolean favorite;
                             for (PageItem item : pageItems) {
-                                if (favoriteMap.containsKey(item.urlPath)) {
-                                    item.favorite = true;
-                                }
+                                favorite = favoriteMap.containsKey(item.urlPath);
+                                items.add(new PageItem(item.title, item.urlPath, favorite));
                             }
-                            result.setValue(pageItems);
+                            result.setValue(items);
                         });
                     }
                 });

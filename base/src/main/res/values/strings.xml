@@ -8,6 +8,8 @@
     <string name="a11y_user_name">user name</string>
     <string name="search_hint">search posts</string>
     <string name="repo_full_name"><b>%s</b>/%s</string>
+    <string name="empty_message">No Content Found</string>
+    <string name="empty_message_favorite">No Favorite Found</string>
     <string name="empty_search_result">No results for <b>%s</b></string>
     <string name="a11y_contributor_avatar">contributor avatar</string>
     <string name="lbl_about">About</string>

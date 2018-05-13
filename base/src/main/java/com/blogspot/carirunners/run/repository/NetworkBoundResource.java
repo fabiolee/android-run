@@ -21,12 +21,14 @@ import android.support.annotation.WorkerThread;
  */
 public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final AppExecutors appExecutors;
+    private final String emptyMsg;
 
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
 
     @MainThread
-    NetworkBoundResource(AppExecutors appExecutors) {
+    NetworkBoundResource(AppExecutors appExecutors, String emptyMsg) {
         this.appExecutors = appExecutors;
+        this.emptyMsg = emptyMsg;
         result.setValue(Resource.loading(null));
         LiveData<ResultType> dbSource = loadFromDb();
         result.addSource(dbSource, data -> {
@@ -34,7 +36,8 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             if (shouldFetch(data)) {
                 fetchFromNetwork(dbSource);
             } else {
-                result.addSource(dbSource, newData -> result.setValue(Resource.success(newData)));
+                result.addSource(dbSource, newData ->
+                        result.setValue(Resource.success(emptyMsg, newData)));
             }
         });
     }
@@ -54,8 +57,8 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                             // we specially request a new live data,
                             // otherwise we will get immediately last cached value,
                             // which may not be updated with latest results received from network.
-                            result.addSource(loadFromDb(),
-                                    newData -> result.setValue(Resource.success(newData)))
+                            result.addSource(loadFromDb(), newData ->
+                                    result.setValue(Resource.success(emptyMsg, newData)))
                     );
                 });
             } else {

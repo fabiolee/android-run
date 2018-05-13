@@ -1,9 +1,11 @@
 package com.blogspot.carirunners.run.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.blogspot.carirunners.run.AppExecutors;
+import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.db.FavoriteDao;
 import com.blogspot.carirunners.run.vo.Favorite;
 import com.blogspot.carirunners.run.vo.Resource;
@@ -20,11 +22,13 @@ import javax.inject.Singleton;
 public class FavoriteRepository {
     private final AppExecutors appExecutors;
     private final FavoriteDao favoriteDao;
+    private final String emptyMsg;
 
     @Inject
-    FavoriteRepository(AppExecutors appExecutors, FavoriteDao favoriteDao) {
+    FavoriteRepository(Context context, AppExecutors appExecutors, FavoriteDao favoriteDao) {
         this.appExecutors = appExecutors;
         this.favoriteDao = favoriteDao;
+        this.emptyMsg = context.getString(R.string.empty_message_favorite);
     }
 
     public void deleteByPath(String path) {
@@ -36,7 +40,7 @@ public class FavoriteRepository {
     }
 
     public LiveData<Resource<List<Favorite>>> load() {
-        return new DatabaseBoundResource<List<Favorite>>() {
+        return new DatabaseBoundResource<List<Favorite>>(emptyMsg) {
             @NonNull
             @Override
             protected LiveData<List<Favorite>> loadFromDb() {

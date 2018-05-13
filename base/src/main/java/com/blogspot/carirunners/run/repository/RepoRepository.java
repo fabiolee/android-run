@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run.repository;
 
 import com.blogspot.carirunners.run.AppExecutors;
+import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.api.RepoSearchResponse;
@@ -15,6 +16,7 @@ import com.blogspot.carirunners.run.vo.Resource;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -35,28 +37,25 @@ import timber.log.Timber;
  */
 @Singleton
 public class RepoRepository {
-
     private final AppDatabase db;
-
     private final RepoDao repoDao;
-
     private final GithubService githubService;
-
     private final AppExecutors appExecutors;
-
     private RateLimiter<String> repoListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
+    private final String emptyMsg;
 
     @Inject
-    public RepoRepository(AppExecutors appExecutors, AppDatabase db, RepoDao repoDao,
-                          GithubService githubService) {
+    public RepoRepository(Context context, AppExecutors appExecutors, AppDatabase db,
+                          RepoDao repoDao, GithubService githubService) {
         this.db = db;
         this.repoDao = repoDao;
         this.githubService = githubService;
         this.appExecutors = appExecutors;
+        this.emptyMsg = context.getString(R.string.empty_message);
     }
 
     public LiveData<Resource<List<Repo>>> loadRepos(String owner) {
-        return new NetworkBoundResource<List<Repo>, List<Repo>>(appExecutors) {
+        return new NetworkBoundResource<List<Repo>, List<Repo>>(appExecutors, emptyMsg) {
             @Override
             protected void saveCallResult(@NonNull List<Repo> item) {
                 repoDao.insertRepos(item);
@@ -87,7 +86,7 @@ public class RepoRepository {
     }
 
     public LiveData<Resource<Repo>> loadRepo(String owner, String name) {
-        return new NetworkBoundResource<Repo, Repo>(appExecutors) {
+        return new NetworkBoundResource<Repo, Repo>(appExecutors, emptyMsg) {
             @Override
             protected void saveCallResult(@NonNull Repo item) {
                 repoDao.insert(item);
@@ -113,7 +112,7 @@ public class RepoRepository {
     }
 
     public LiveData<Resource<List<Contributor>>> loadContributors(String owner, String name) {
-        return new NetworkBoundResource<List<Contributor>, List<Contributor>>(appExecutors) {
+        return new NetworkBoundResource<List<Contributor>, List<Contributor>>(appExecutors, emptyMsg) {
             @Override
             protected void saveCallResult(@NonNull List<Contributor> contributors) {
                 for (Contributor contributor : contributors) {
@@ -161,7 +160,7 @@ public class RepoRepository {
     }
 
     public LiveData<Resource<List<Repo>>> search(String query) {
-        return new NetworkBoundResource<List<Repo>, RepoSearchResponse>(appExecutors) {
+        return new NetworkBoundResource<List<Repo>, RepoSearchResponse>(appExecutors, emptyMsg) {
 
             @Override
             protected void saveCallResult(@NonNull RepoSearchResponse item) {

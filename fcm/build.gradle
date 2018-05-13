@@ -44,5 +44,6 @@ android {
 
 dependencies {
     implementation project(':base')
+    implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.google.firebase:firebase-messaging:$googleServicesVersion"
 }

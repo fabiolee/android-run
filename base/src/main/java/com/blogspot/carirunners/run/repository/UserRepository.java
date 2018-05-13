@@ -1,6 +1,7 @@
 package com.blogspot.carirunners.run.repository;
 
 import com.blogspot.carirunners.run.AppExecutors;
+import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.api.ApiResponse;
 import com.blogspot.carirunners.run.api.GithubService;
 import com.blogspot.carirunners.run.db.UserDao;
@@ -8,6 +9,7 @@ import com.blogspot.carirunners.run.vo.Resource;
 import com.blogspot.carirunners.run.vo.User;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -22,16 +24,19 @@ public class UserRepository {
     private final UserDao userDao;
     private final GithubService githubService;
     private final AppExecutors appExecutors;
+    private final String emptyMsg;
 
     @Inject
-    UserRepository(AppExecutors appExecutors, UserDao userDao, GithubService githubService) {
+    UserRepository(Context context, AppExecutors appExecutors, UserDao userDao,
+                   GithubService githubService) {
         this.userDao = userDao;
         this.githubService = githubService;
         this.appExecutors = appExecutors;
+        this.emptyMsg = context.getString(R.string.empty_message);
     }
 
     public LiveData<Resource<User>> loadUser(String login) {
-        return new NetworkBoundResource<User,User>(appExecutors) {
+        return new NetworkBoundResource<User,User>(appExecutors, emptyMsg) {
             @Override
             protected void saveCallResult(@NonNull User item) {
                 userDao.insert(item);

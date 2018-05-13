@@ -40,7 +40,7 @@ public class FetchNextSearchPageTask implements Runnable {
         }
         final Integer nextPage = current.next;
         if (nextPage == null) {
-            liveData.postValue(Resource.success(false));
+            liveData.postValue(Resource.success(null, false));
             return;
         }
         try {
@@ -63,7 +63,7 @@ public class FetchNextSearchPageTask implements Runnable {
                 } finally {
                     db.endTransaction();
                 }
-                liveData.postValue(Resource.success(apiResponse.getNextPage() != null));
+                liveData.postValue(Resource.success(null, apiResponse.getNextPage() != null));
             } else {
                 liveData.postValue(Resource.error(apiResponse.errorMessage, true));
             }

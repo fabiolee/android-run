@@ -69,18 +69,17 @@ jacoco {
 
 dependencies {
     application project(':app')
-    implementation "android.arch.lifecycle:common-java8:$android_arch_version"
-    implementation "android.arch.lifecycle:extensions:$android_arch_version"
-    implementation "android.arch.lifecycle:runtime:$android_arch_version"
-    implementation "android.arch.persistence.room:runtime:$android_arch_version"
+    implementation "android.arch.lifecycle:common-java8:$android_arch_lifecycle_version"
+    api "android.arch.lifecycle:extensions:$android_arch_lifecycle_version"
+    implementation "android.arch.persistence.room:runtime:$android_arch_room_version"
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
     api "com.android.support:cardview-v7:$androidSupportVersion"
     api "com.android.support:design:$androidSupportVersion"
-    implementation "com.android.support:multidex:$androidMultidexVersion"
+    api "com.android.support:multidex:$androidMultidexVersion"
     implementation "com.android.support:preference-v14:$androidSupportVersion"
     implementation "com.android.support:recyclerview-v7:$androidSupportVersion"
     implementation("com.crashlytics.sdk.android:crashlytics:$fabric_crashlytics_version@aar") {
-        transitive = true;
+        transitive = true
     }
     implementation "com.facebook.stetho:stetho:$facebookStethoVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$squareOkHttpVersion"
@@ -93,14 +92,14 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     implementation "com.google.firebase:firebase-core:$googleServicesVersion"
     api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-    api "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jsoup:jsoup:$jsoupVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$android_arch_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$android_arch_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$android_arch_room_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$android_arch_lifecycle_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
-    testImplementation("android.arch.core:core-testing:$android_arch_version", {
+    testImplementation("android.arch.core:core-testing:$android_arch_lifecycle_version", {
         exclude group: 'com.android.support', module: 'support-compat'
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-core-utils'
@@ -108,7 +107,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
 
-    androidTestImplementation "android.arch.core:core-testing:$android_arch_version"
+    androidTestImplementation "android.arch.core:core-testing:$android_arch_lifecycle_version"
     androidTestImplementation "com.android.support:appcompat-v7:$androidSupportVersion"
     androidTestImplementation "com.android.support:recyclerview-v7:$androidSupportVersion"
     androidTestImplementation "com.android.support:support-v4:$androidSupportVersion"

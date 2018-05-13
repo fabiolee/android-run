@@ -18,13 +18,14 @@ ext {
     versionCode = 11
     versionName = "1.0.8"
 
-    android_arch_version = "1.0.0"
+    android_arch_lifecycle_version = "1.1.1"
+    android_arch_room_version = "1.1.0"
     androidInstantAppsVersion = "1.1.0"
-    androidSupportVersion = "27.0.2"
-    androidMultidexVersion = "1.0.2"
+    androidSupportVersion = "27.1.1"
+    androidMultidexVersion = "1.0.3"
     fabric_crashlytics_version = "2.9.1"
     facebookStethoVersion = "1.5.0"
-    googleServicesVersion = "11.8.0"
+    googleServicesVersion = "15.0.2"
     jsoupVersion = "1.10.3"
     squareOkHttpVersion = "3.8.0"
     squareRetrofitVersion = "2.3.0"
@@ -34,7 +35,7 @@ ext {
     mockwebserver_version = "3.6.0"
     apache_commons_version = "2.5"
     mockito_version = "2.7.19"
-    constraint_layout_version = "1.0.2"
+    constraint_layout_version = "1.1.0"
     glide_version = "3.7.0"
     timber_version = "4.5.1"
 }
