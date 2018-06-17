@@ -21,6 +21,11 @@ android {
         versionName rootProject.ext.versionName
         multiDexEnabled = true
         testInstrumentationRunner "com.blogspot.carirunners.run.util.AppTestRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     signingConfigs {
         release {
@@ -50,6 +55,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
         androidTest.java.srcDirs += "src/test-common/java"
         test.java.srcDirs += "src/test-common/java"
     }
