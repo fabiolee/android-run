@@ -11,7 +11,11 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppTheme.PreferenceThemeOverlay.v14.Material" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="android:layout">@layout/settings_fragment</item>
     </style>
 
 </resources>

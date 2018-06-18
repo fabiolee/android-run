@@ -9,9 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
@@ -28,7 +26,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bottom_navigation_activity);
+        setContentView(R.layout.main_activity);
         initView();
         parseIntent(getIntent());
     }
@@ -54,18 +52,17 @@ public class MainActivity extends BaseActivity
     }
 
     private void initView() {
-        AppBarLayout appbar = findViewById(R.id.appbar);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        //AppBarLayout appbar = findViewById(R.id.appbar);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         // Init AppBarLayout
+        /*
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 bottomNavigation.setTranslationY(verticalOffset * -1);
             }
         });
-        // Init Toolbar
-        setSupportActionBar(toolbar);
+        */
         // Init BottomNavigationView
         bottomNavigation.setOnNavigationItemSelectedListener(this);
         bottomNavigation.setSelectedItemId(R.id.action_home);

@@ -19,18 +19,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!-- Required ViewGroup for PreferenceFragmentCompat -->
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@android:id/list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/bottom_navigation_view_background_color"
-        app:elevation="8dp"
-        app:menu="@menu/bottom_navigation" />
 </android.support.design.widget.CoordinatorLayout>

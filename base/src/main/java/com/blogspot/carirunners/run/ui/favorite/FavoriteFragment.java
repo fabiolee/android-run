@@ -4,6 +4,7 @@ import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.PageFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
+import com.blogspot.carirunners.run.ui.common.BaseFragment;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.ui.common.PageItemAdapter;
 import com.blogspot.carirunners.run.ui.post.PostActivity;
@@ -18,8 +19,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import javax.inject.Inject;
 /**
  * The UI Controller for displaying a Blogger Favorite's information.
  */
-public class FavoriteFragment extends Fragment implements Injectable {
+public class FavoriteFragment extends BaseFragment implements Injectable {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
@@ -79,6 +80,10 @@ public class FavoriteFragment extends Fragment implements Injectable {
         PageFragmentBinding dataBinding = DataBindingUtil
                 .inflate(inflater, R.layout.page_fragment, container, false);
         dataBinding.setRetryCallback(() -> viewModel.retry());
+
+        Toolbar toolbar = dataBinding.toolbar;
+        activity.setSupportActionBar(toolbar);
+
         binding = new AutoClearedValue<>(this, dataBinding);
         return dataBinding.getRoot();
     }
