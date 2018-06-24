@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.blogspot.carirunners.run.MainActivity;
 import com.blogspot.carirunners.run.ui.favorite.FavoriteFragment;
 import com.blogspot.carirunners.run.ui.page.PageFragment;
+import com.blogspot.carirunners.run.ui.post.PostFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
 
@@ -21,6 +22,10 @@ public abstract class FragmentBuildersModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract PageFragment pageFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract PostFragment postFragment();
 
     @FragmentScoped
     @ContributesAndroidInjector

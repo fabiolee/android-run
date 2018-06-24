@@ -2,7 +2,6 @@ package com.blogspot.carirunners.run;
 
 import com.blogspot.carirunners.run.ui.common.BaseActivity;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
-import com.blogspot.carirunners.run.ui.post.PostActivity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
@@ -76,7 +76,16 @@ public class MainActivity extends BaseActivity
             urlPath = Uri.parse(url).getPath();
         }
         if ((title != null) && (urlPath != null)) {
-            startActivity(PostActivity.getStartIntent(this, null, title, urlPath, false));
+            navigationController.navigateToPost(null, title, urlPath, false);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (currentFragment != null &&
+                !currentFragment.getChildFragmentManager().popBackStackImmediate()) {
+            super.onBackPressed();
         }
     }
 }

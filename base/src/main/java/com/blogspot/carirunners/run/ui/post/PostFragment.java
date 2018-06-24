@@ -4,6 +4,7 @@ import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.PostFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
+import com.blogspot.carirunners.run.ui.common.BaseChildFragment;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 import com.blogspot.carirunners.run.vo.Favorite;
@@ -13,13 +14,11 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.content.res.AppCompatResources;
@@ -43,12 +42,16 @@ import javax.inject.Inject;
 /**
  * The UI Controller for displaying a Blogger Post's information.
  */
-public class PostFragment extends Fragment implements Injectable {
+public class PostFragment extends BaseChildFragment implements Injectable {
+    private static final String ID = "id";
+    private static final String TITLE = "title";
+    private static final String PATH = "path";
+    private static final String FAVORITE = "favorite";
+
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     private FirebaseAnalytics analytics;
-    private PostActivity activity;
     private PostViewModel viewModel;
 
     private boolean favorite;
@@ -65,18 +68,12 @@ public class PostFragment extends Fragment implements Injectable {
     public static PostFragment newInstance(String id, String title, String path, boolean favorite) {
         PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
-        args.putString(PostActivity.ID, id);
-        args.putString(PostActivity.TITLE, title);
-        args.putString(PostActivity.PATH, path);
-        args.putBoolean(PostActivity.FAVORITE, favorite);
+        args.putString(ID, id);
+        args.putString(TITLE, title);
+        args.putString(PATH, path);
+        args.putBoolean(FAVORITE, favorite);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = (PostActivity) context;
     }
 
     @Override
@@ -94,10 +91,10 @@ public class PostFragment extends Fragment implements Injectable {
         String title = null;
         String path = null;
         if (args != null) {
-            id = args.getString(PostActivity.ID);
-            title = args.getString(PostActivity.TITLE);
-            path = args.getString(PostActivity.PATH);
-            favorite = args.getBoolean(PostActivity.FAVORITE);
+            id = args.getString(ID);
+            title = args.getString(TITLE);
+            path = args.getString(PATH);
+            favorite = args.getBoolean(FAVORITE);
             favoriteEntity = new Favorite(id, title, path);
         }
         viewModel.setId(id, path);
@@ -189,14 +186,17 @@ public class PostFragment extends Fragment implements Injectable {
         inflater.inflate(R.menu.post_menu, menu);
         favoriteMenu = menu.findItem(R.id.action_favorites);
         iconColor = ContextCompat.getColor(getContext(), R.color.icons);
-        activity.setMenuItemTitleTint(favoriteMenu, iconColor);
+        activity.setMenuItemTint(favoriteMenu, iconColor);
         updateFavoriteIcon(favorite);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.action_favorites) {
+        if (itemId == android.R.id.home) {
+            activity.onBackPressed();
+            return true;
+        } else if (itemId == R.id.action_favorites) {
             viewModel.toggleFavorite(favorite, favoriteEntity);
             favorite = !favorite;
             updateFavoriteIcon(favorite);

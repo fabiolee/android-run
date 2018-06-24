@@ -71,6 +71,7 @@ public class BaseActivity extends DaggerAppCompatActivity implements LifecycleRe
     }
 
     public void setMenuItemIconTint(MenuItem item, Drawable drawable, int color) {
+        drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, color);
         item.setIcon(drawable);
     }

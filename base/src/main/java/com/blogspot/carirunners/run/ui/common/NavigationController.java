@@ -1,9 +1,7 @@
 package com.blogspot.carirunners.run.ui.common;
 
 import com.blogspot.carirunners.run.R;
-import com.blogspot.carirunners.run.ui.favorite.FavoriteFragment;
-import com.blogspot.carirunners.run.ui.page.PageFragment;
-import com.blogspot.carirunners.run.ui.post.PostFragment;
+import com.blogspot.carirunners.run.MainFragment;
 import com.blogspot.carirunners.run.ui.search.SearchFragment;
 import com.blogspot.carirunners.run.ui.settings.SettingsFragment;
 import com.blogspot.carirunners.run.ui.user.UserFragment;
@@ -19,8 +17,6 @@ import javax.inject.Inject;
  * A utility class that handles navigation in {@link AppCompatActivity}.
  */
 public class NavigationController {
-    private static final String BACK_STACK_ROOT_FRAGMENT = "BackStackRootFragment";
-
     private final int containerId;
     private final FragmentManager fragmentManager;
 
@@ -39,35 +35,26 @@ public class NavigationController {
 
     public void navigateToFavorite() {
         String tag = "FavoriteFragment";
-        FavoriteFragment fragment = (FavoriteFragment) fragmentManager.findFragmentByTag(tag);
+        MainFragment fragment = (MainFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
-            fragment = new FavoriteFragment();
+            fragment = MainFragment.newInstance(tag);
         }
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .commitAllowingStateLoss();
+        changeTab(fragment, tag);
     }
 
-    public void navigateToPage() {
+    public MainFragment navigateToPage() {
         String tag = "PageFragment";
-        PageFragment fragment = (PageFragment) fragmentManager.findFragmentByTag(tag);
+        MainFragment fragment = (MainFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
-            fragment = new PageFragment();
+            fragment = MainFragment.newInstance(tag);
         }
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .commitAllowingStateLoss();
+        changeTab(fragment, tag);
+        return fragment;
     }
 
     public void navigateToPost(String id, String title, String path, boolean favorite) {
-        String tag = "PostFragment";
-        PostFragment fragment = (PostFragment) fragmentManager.findFragmentByTag(tag);
-        if (fragment == null) {
-            fragment = PostFragment.newInstance(id, title, path, favorite);
-        }
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .commitAllowingStateLoss();
+        MainFragment parentFragment = navigateToPage();
+        parentFragment.navigateToPostWhenReady(id, title, path, favorite);
     }
 
     public void navigateToSettings() {
@@ -76,9 +63,7 @@ public class NavigationController {
         if (fragment == null) {
             fragment = new SettingsFragment();
         }
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .commitAllowingStateLoss();
+        changeTab(fragment, tag);
     }
 
     public void navigateToUser(String login) {
@@ -90,25 +75,11 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
-    private void changeScreen(Fragment fragment, String tag) {
-        // Add a fragment on top of the current screen
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
-    }
-
     private void changeTab(Fragment fragment, String tag) {
-        // Pop off everything up to and including the current tab
-        fragmentManager.popBackStack(BACK_STACK_ROOT_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        // Add the new tab fragment
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .addToBackStack(BACK_STACK_ROOT_FRAGMENT)
-                .commitAllowingStateLoss();
-    }
+        if (fragment.isAdded()) {
+            return;
+        }
 
-    private void changeTab(Fragment fragment, String tag, boolean isNew) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         Fragment currentFragment = fragmentManager.findFragmentById(containerId);
@@ -118,11 +89,10 @@ public class NavigationController {
             transaction.detach(currentFragment);
         }
 
-        // Do we already have this fragment?
-        if (isNew) {
-            transaction.add(containerId, fragment, tag);
-        } else {
+        if (fragment.isDetached()) {
             transaction.attach(fragment);
+        } else {
+            transaction.add(containerId, fragment, tag);
         }
         fragment.setMenuVisibility(true);
         fragment.setUserVisibleHint(true);

@@ -4,10 +4,9 @@ import com.blogspot.carirunners.run.R;
 import com.blogspot.carirunners.run.binding.FragmentDataBindingComponent;
 import com.blogspot.carirunners.run.databinding.PageFragmentBinding;
 import com.blogspot.carirunners.run.di.Injectable;
-import com.blogspot.carirunners.run.ui.common.BaseFragment;
+import com.blogspot.carirunners.run.ui.common.BaseChildFragment;
 import com.blogspot.carirunners.run.ui.common.NavigationController;
 import com.blogspot.carirunners.run.ui.common.PageItemAdapter;
-import com.blogspot.carirunners.run.ui.post.PostActivity;
 import com.blogspot.carirunners.run.util.AutoClearedValue;
 import com.blogspot.carirunners.run.vo.Favorite;
 import com.blogspot.carirunners.run.vo.PageItem;
@@ -33,7 +32,7 @@ import javax.inject.Inject;
 /**
  * The UI Controller for displaying a Blogger Favorite's information.
  */
-public class FavoriteFragment extends BaseFragment implements Injectable {
+public class FavoriteFragment extends BaseChildFragment implements Injectable {
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
@@ -55,8 +54,8 @@ public class FavoriteFragment extends BaseFragment implements Injectable {
                 new PageItemAdapter.Callback() {
                     @Override
                     public void onClick(PageItem pageItem) {
-                        startActivity(PostActivity.getStartIntent(getContext(), null,
-                                pageItem.title, pageItem.urlPath, pageItem.favorite));
+                        parentFragment.navigateToPost(null, pageItem.title, pageItem.urlPath,
+                                pageItem.favorite);
                     }
 
                     @Override

@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressKey;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -91,7 +90,7 @@ public class SearchFragmentTest {
                 "http://carirunners.blogspot.com/2013/05/kul-imu-charity-run-2013.html",
                 "[KUL] IMU Charity Run 2013", "HTML content",
                 Arrays.asList("kuala lumpur", "race", "road"));
-        results.postValue(Resource.success(Arrays.asList(post)));
+        results.postValue(Resource.success(null, Arrays.asList(post)));
         onView(listMatcher().atPosition(0))
                 .check(matches(hasDescendant(withText("[KUL] IMU Charity Run 2013"))));
         onView(withId(R.id.progress_bar)).check(matches(not(isDisplayed())));
@@ -123,22 +122,10 @@ public class SearchFragmentTest {
                 "http://carirunners.blogspot.com/2013/05/kul-imu-charity-run-2013.html",
                 "[KUL] IMU Charity Run 2013", "HTML content",
                 Arrays.asList("kuala lumpur", "race", "road"));
-        results.postValue(Resource.success(posts));
+        results.postValue(Resource.success(null, posts));
         onView(withId(R.id.repo_list)).perform(RecyclerViewActions.scrollToPosition(49));
         onView(listMatcher().atPosition(49)).check(matches(isDisplayed()));
         verify(viewModel).loadNextPage();
-    }
-
-    @Test
-    public void navigateToPost() throws Throwable {
-        Post post = TestUtil.createPost("2013-05-27T11:16:00+08:00",
-                "2013-05-27T11:16:11+08:00",
-                "http://carirunners.blogspot.com/2013/05/kul-imu-charity-run-2013.html",
-                "[KUL] IMU Charity Run 2013", "HTML content",
-                Arrays.asList("kuala lumpur", "race", "road"));
-        results.postValue(Resource.success(Arrays.asList(post)));
-        onView(withText("desc")).perform(click());
-        verify(navigationController).navigateToPost("foo", "bar");
     }
 
     @Test
