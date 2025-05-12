@@ -3,6 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def keystorePropertiesFile = rootProject.file("cert/keystore.properties")
+def keystoreProperties
+try {
+    keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} catch (Exception ignored) {
+    keystoreProperties = null
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -12,6 +21,14 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled = true
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -24,6 +41,7 @@ android {
 
 dependencies {
     implementation project(':app')
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.google.firebase:firebase-messaging:$googleServicesVersion"
+    implementation project(':fcm')
 }
+
+apply plugin: 'com.google.gms.google-services'

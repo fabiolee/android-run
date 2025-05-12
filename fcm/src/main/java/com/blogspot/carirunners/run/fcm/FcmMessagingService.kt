@@ -1,62 +1,76 @@
-package com.blogspot.carirunners.run.fcm;
+package com.blogspot.carirunners.run.fcm
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
-
-import com.blogspot.carirunners.run.MainActivity;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-
-import timber.log.Timber;
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.media.RingtoneManager
+import android.os.Build
+import android.support.annotation.RequiresApi
+import android.support.v4.app.NotificationCompat
+import android.support.v4.content.res.ResourcesCompat
+import com.blogspot.carirunners.run.MainActivity
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
+import timber.log.Timber
+import com.blogspot.carirunners.run.R as appR
 
 /**
  * @author fabiolee
  */
-public class FcmMessagingService extends FirebaseMessagingService {
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        Timber.d("From: " + remoteMessage.getFrom());
+class FcmMessagingService : FirebaseMessagingService() {
+    companion object {
+        private const val KEY_URL = "url"
+    }
 
-        String url = null;
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Timber.d("From: " + remoteMessage.from)
+
+        var url: String? = null
         // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Timber.d("Message data payload: " + remoteMessage.getData());
-            url = remoteMessage.getData().get(MainActivity.KEY_URL);
+        if (remoteMessage.data.isNotEmpty()) {
+            Timber.d("Message data payload: " + remoteMessage.data)
+            url = remoteMessage.data[KEY_URL]
         }
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Timber.d("Message Notification Body: " + remoteMessage.getNotification().getBody());
+        val messageNotification = remoteMessage.notification
+        if (messageNotification != null) {
+            Timber.d("Message Notification Body: " + messageNotification.body)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationChannel();
+                createNotificationChannel()
             }
-            sendNotification(remoteMessage.getNotification().getBody(), url);
+            sendNotification(messageNotification.body, url)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private void createNotificationChannel() {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        CharSequence channelName = "Run";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel notificationChannel = new NotificationChannel(
-                getString(R.string.notification_channel_id), channelName, importance);
-        notificationChannel.enableLights(true);
-        notificationChannel.setLightColor(Color.RED);
-        notificationChannel.enableVibration(true);
-        notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-        notificationManager.createNotificationChannel(notificationChannel);
+    private fun createNotificationChannel() {
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager?
+        if (notificationManager != null) {
+            val channelName: CharSequence = "Run"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val notificationChannel = NotificationChannel(
+                getString(R.string.notification_channel_id), channelName, importance
+            )
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.vibrationPattern = longArrayOf(
+                100,
+                200,
+                300,
+                400,
+                500,
+                400,
+                300,
+                200,
+                400
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
     }
 
     /**
@@ -64,29 +78,34 @@ public class FcmMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody, String url) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(MainActivity.KEY_URL, url);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private fun sendNotification(messageBody: String?, url: String?) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra(KEY_URL, url)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-                this, getString(R.string.notification_channel_id))
-                .setSmallIcon(R.drawable.ic_directions_run_white_24dp)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
-                        R.mipmap.ic_launcher_round))
-                .setColor(getResources().getColor(R.color.accent))
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val notificationBuilder = NotificationCompat.Builder(
+            this, getString(R.string.notification_channel_id)
+        )
+            .setSmallIcon(R.drawable.ic_directions_run_white_24dp)
+            .setLargeIcon(
+                BitmapFactory.decodeResource(
+                    resources,
+                    appR.mipmap.ic_launcher_round
+                )
+            )
+            .setColor(ResourcesCompat.getColor(resources, appR.color.accent, theme))
+            .setContentTitle(getString(appR.string.app_name))
+            .setContentText(messageBody)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, notificationBuilder.build());
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager?
+        notificationManager?.notify(0, notificationBuilder.build())
     }
 }

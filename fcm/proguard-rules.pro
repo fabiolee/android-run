@@ -22,13 +22,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Fabric Crashlytics
--keepattributes *Annotation*
--keepattributes SourceFile,LineNumberTable
--keep public class * extends java.lang.Exception
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
-
 # Google Dagger
 -dontwarn com.google.errorprone.annotations.**
 
