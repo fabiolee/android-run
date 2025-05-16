@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.blogspot.carirunners.run.installedapp"
+    android:targetSandboxVersion="2"
+    tools:targetApi="26">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="false">
+        <dist:fusing dist:include="true" />
+    </dist:module>
+</manifest>

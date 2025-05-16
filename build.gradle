@@ -1,13 +1,15 @@
 buildscript {
+    ext {
+        kotlin_version = '1.4.0'
+    }
     repositories {
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.6.4'
         classpath 'com.google.gms:google-services:4.0.1'
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -23,7 +25,6 @@ ext {
     androidInstantAppsVersion = "1.1.0"
     androidSupportVersion = "27.1.1"
     androidMultidexVersion = "1.0.3"
-    fabric_crashlytics_version = "2.9.2"
     facebookStethoVersion = "1.5.0"
     googleServicesVersion = "15.0.2"
     jsoupVersion = "1.10.3"
@@ -44,7 +45,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 }
