@@ -1,21 +1,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.blogspot.carirunners.run.fcm">
 
     <dist:module
         dist:instant="false"
-        dist:onDemand="false"
-        dist:title="FCM">
+        dist:onDemand="false">
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application>
-        <service android:name=".FcmInstanceIdService">
+    <application tools:ignore="MissingApplicationIcon">
+        <service
+            android:name=".FcmInstanceIdService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".FcmMessagingService">
+        <service
+            android:name=".FcmMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
