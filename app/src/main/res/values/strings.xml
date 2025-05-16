@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- app -->
     <string name="app_name">Cari Runners</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://carirunners-57b89.firebaseapp.com\",\n  }\n}]</string>
     <string name="retry">Retry</string>
@@ -19,4 +20,6 @@
     <string name="lbl_settings">Settings</string>
     <string name="lbl_version">Version</string>
     <string name="summary_version" translatable="false">%s</string>
+    <!-- fcm -->
+    <string name="fcm_notification_channel_id">run</string>
 </resources>

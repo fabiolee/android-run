@@ -53,7 +53,7 @@ class FcmMessagingService : FirebaseMessagingService() {
             val channelName: CharSequence = "Run"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val notificationChannel = NotificationChannel(
-                getString(R.string.notification_channel_id), channelName, importance
+                getString(appR.string.fcm_notification_channel_id), channelName, importance
             )
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
@@ -89,9 +89,9 @@ class FcmMessagingService : FirebaseMessagingService() {
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(
-            this, getString(R.string.notification_channel_id)
+            this, getString(appR.string.fcm_notification_channel_id)
         )
-            .setSmallIcon(R.drawable.ic_directions_run_white_24dp)
+            .setSmallIcon(appR.drawable.fcm_ic_directions_run_white_24dp)
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     resources,
